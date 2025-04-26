@@ -1,16 +1,15 @@
-//?register user
-//extract the info from the req body
-//validate the information
-//invalid then throw error
-//extract user info
-//find the user by email
-//if exists throw error
-//hash password
-//add to database
+import yup from "yup";
 
-//?login user
-//extract the information from request body
-// find the user by email
-//if does not exist throw error
-//if exists check the password
-//generate token
+export const userValidationSchema = yup.object({
+  email: yup.string().required().trim().max(55).lowercase().email(),
+  password: yup.string().required().trim(),
+  firstName: yup.string().required().trim().max(30),
+  lastName: yup.string().required().trim().max(30),
+  gender: yup.string().required().oneOf(["male", "female", "other"]),
+  role: yup.string().required().oneOf(["admin", "client"]),
+});
+
+export const loginValidationSchema = yup.object({
+  email: yup.string().required().trim().max(55).lowercase().email(),
+  password: yup.string().required().trim(),
+});
