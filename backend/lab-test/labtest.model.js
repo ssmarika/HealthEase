@@ -13,7 +13,12 @@ const labTestSchema = new mongoose.Schema({
     maxlength: 1000,
     required: true,
   },
-  price: {
+  inPersonPrice: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  homeServicePrice: {
     type: Number,
     required: true,
     min: 0,
