@@ -2,6 +2,7 @@ import express from "express";
 import connectDB from "./database-connection/db.connect.js";
 import UserRoutes from "./user/user.controller.js";
 import LabTestRoutes from "./lab-test/labtest.controller.js";
+import BookingRoutes from "./bookings/booking.controller.js";
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 //register routers
 app.use("/user", UserRoutes);
 app.use("/labtest", LabTestRoutes);
+app.use("/booking", BookingRoutes);
 
 //database connection
 await connectDB();

@@ -5,6 +5,5 @@ export const labTestValidationSchema = yup.object({
   description: yup.string().required().max(1000),
   inPersonPrice: yup.number().required().moreThan(0),
   homeServicePrice: yup.number().required().moreThan(0),
-
   available: yup.boolean().default(true),
 });
