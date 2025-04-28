@@ -1,23 +1,35 @@
 'use client';
 
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import LabTestIcon from '@mui/icons-material/Science'; // Icon for Lab Test
-import BlogIcon from '@mui/icons-material/Article'; // Icon for Blog
-import TestimonyIcon from '@mui/icons-material/Chat'; // Icon for Testimony
+import LabTestIcon from '@mui/icons-material/Science';
+import BlogIcon from '@mui/icons-material/Article';
+import TestimonyIcon from '@mui/icons-material/Chat';
 import ResponsiveAppBar from './Appbar';
+import Slider from 'react-slick'; // Import React Slick
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { images } from '@/constants/general.constant'; // Import the images array
 
 function Homepage() {
+  // React Slick settings for the carousel
+  const sliderSettings = {
+    dots: true, // Show dots for navigation
+    infinite: true, // Infinite loop
+    speed: 500, // Transition speed in ms
+    slidesToShow: 1, // Number of slides to show at once
+    slidesToScroll: 1, // Number of slides to scroll at once
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 2000, // Change slides every 2 seconds
+  };
+
   return (
     <div>
-     
-      <ResponsiveAppBar/>
+      {/* AppBar */}
+      <ResponsiveAppBar />
 
       {/* Hero Section */}
       <Box
@@ -45,16 +57,26 @@ function Homepage() {
           Medical services at your doorstep
         </Typography>
 
-        {/* Image Placeholder */}
+        {/* Image Carousel */}
         <Box
           sx={{
             width: { xs: '80%', md: '40%' },
             height: '300px',
-            backgroundColor: '#2E7D32',
             borderRadius: '8px',
+            overflow: 'hidden',
           }}
         >
-          {/* Step for adding image: Replace this Box with an <img> tag */}
+          <Slider {...sliderSettings}>
+            {images.map((image, index) => (
+              <div key={index}>
+                <img
+                  src={image}
+                  alt={`Slide ${index + 1}`}
+                  style={{ width: '100%', height: '300px', objectFit: 'cover' }}
+                />
+              </div>
+            ))}
+          </Slider>
         </Box>
       </Box>
 

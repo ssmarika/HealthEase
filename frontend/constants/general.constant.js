@@ -14,3 +14,9 @@ export const genders = [
   { id: 2, gender: "female" },
   { id: 3, gender: "others" },
 ];
+
+export const images = [
+  "/img1.png", // Replace with your image paths
+  "/img2.png",
+  "/img3.png",
+];
