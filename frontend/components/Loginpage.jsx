@@ -9,7 +9,7 @@ const LoginPage = () => {
     <div className="flex h-screen w-full">
       {/* Left Panel */}
       <div className="flex-1 bg-green-600 flex flex-col justify-center items-center text-white p-8">
-        <h1 className="text-4xl font-bold">Logo</h1>
+        <h1 className="text-4xl font-bold">E-pharma</h1>
         <p className="mt-4 text-center text-lg">
           Create is simply your account text of printing and typesetting
           industry.
