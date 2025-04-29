@@ -3,7 +3,6 @@ import { isAdmin, isClient } from "../middleware/authentication.js";
 import validateReqBody from "../middleware/validate.req.body.js";
 import { bookingValidationSchema } from "./booking.validation.js";
 import Booking from "./booking.model.js";
-import validateMongoIdFromParams from "../middleware/validate.mongoid.js";
 import mongoose from "mongoose";
 
 const router = express.Router();

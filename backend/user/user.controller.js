@@ -83,14 +83,20 @@ router.post(
     const valid = await bcrypt.compare(plainPassword, hashedPassword);
 
     if (!valid) {
-      return res.status(200).send({ message: "Invalid Credentials" });
+      return res.status(400).send({ message: "Invalid Credentials" });
     }
 
     //generate token
     const payload = { email: user.email };
     const sign = process.env.ACCESS_TOKEN_SECRET_KEY;
 
-    const accessToken = jwt.sign(payload, sign);
+    const accessToken = jwt.sign(
+      payload,
+      sign
+      //   , {
+      //   expiresIn: 'process.env.ACCESS_TOKEN_EXPIRES_IN',
+      // }
+    );
 
     return res
       .status(200)
