@@ -2,9 +2,27 @@
 
 import { loginValidationSchema } from "@/validation-schema/login.validation.schema";
 import { Formik } from "formik";
-import { TextField, Button, Typography } from "@mui/material";
+import { TextField, Button, Typography, LinearProgress } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import $axios from "@/lib/axios/axios.instance";
 
 const LoginPage = () => {
+  const router = useRouter();
+
+  const { isPending, error, data, mutate } = useMutation({
+    mutationFn: ["login-user"],
+    mutationFn: async (values) => {
+      return await $axios.post("/user/login", values);
+    },
+    onSuccess: (response) => {
+      window.localStorage.setItem("token", response?.data?.accessToken);
+      window.localStorage.setItem("firstName", response?.data?.user?.firstName);
+      window.localStorage.setItem("userRole", response?.data?.user?.role);
+
+      router.push("/");
+    },
+  });
   return (
     <div className="flex h-screen w-full">
       {/* Left Panel */}
@@ -18,8 +36,9 @@ const LoginPage = () => {
 
       {/* Right Panel */}
       <div className="flex-1 flex justify-center items-center bg-gray-100">
-        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-          <Typography variant="h4" className="text-center font-bold mb-4">
+        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6">
+          {isPEnding && <LinearProgress sx={{ backgroundColor: "#033069" }} />}
+          <Typography variant="h4" className="text-center font-bold ">
             Sign In
           </Typography>
 
@@ -27,8 +46,9 @@ const LoginPage = () => {
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={loginValidationSchema}
-            onSubmit={(values) => {
+            onSubmit={async (values) => {
               console.log(values);
+              mutate(values);
             }}
           >
             {(formik) => (
@@ -58,7 +78,6 @@ const LoginPage = () => {
                   <TextField
                     fullWidth
                     label="Password"
-                    type="password"
                     variant="outlined"
                     {...formik.getFieldProps("password")}
                     className="mt-1"

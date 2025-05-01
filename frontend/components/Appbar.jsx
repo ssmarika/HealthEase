@@ -1,27 +1,26 @@
 "use client";
 
-import React, { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import React, { useState } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 
-const pages = ['Lab-Tests', 'Appointments', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ["Lab-Tests", "Appointments", "Blog"];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
-  // Removed TypeScript-specific types (e.g., `<null | HTMLElement>`) in useState
-  const [anchorElNav, setAnchorElNav] = useState(null); // Changed from useState<null | HTMLElement>(null)
-  const [anchorElUser, setAnchorElUser] = useState(null); // Changed from useState<null | HTMLElement>(null)
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,30 +38,50 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="fixed" color='success'>
+    <AppBar
+      position="fixed"
+      color="success"
+      sx={{
+        height: "80px",
+        backgroundColor: "#033069",
+      }}
+    >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <MedicalServicesIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+        <Toolbar
+          disableGutters
+          sx={{
+            minHeight: "80px",
+            alignItems: "center",
+          }}
+        >
+          {/* Logo and Title */}
+          <MedicalServicesIcon
+            sx={{
+              display: { xs: "none", md: "flex" },
+              fontSize: "36px",
+              mr: 1,
+            }}
+          />
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-              fontStyle:'bold'
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
-            E-PHARMA
+            HealthEase
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* Mobile Menu */}
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -77,55 +96,72 @@ function ResponsiveAppBar() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
+              sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <MedicalServicesIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
+          {/* Logo and Title for Mobile */}
+          <MedicalServicesIcon
+            sx={{
+              display: { xs: "flex", md: "none" },
+              fontSize: "32px", // Increased logo size for mobile
+              mr: 1,
+            }}
+          />
           <Typography
-            variant="h5"
+            variant="h6"
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
-            E-PHARMA
+            HealthEase
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+          {/* Page Names */}
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  fontSize: "16px", // Smaller font size for page names
+                }}
               >
                 {page}
               </Button>
             ))}
           </Box>
+
+          {/* User Avatar and Menu */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -133,24 +169,26 @@ function ResponsiveAppBar() {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                  <Typography sx={{ textAlign: "center" }}>
+                    {setting}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>

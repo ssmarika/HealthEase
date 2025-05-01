@@ -2,10 +2,31 @@
 
 import { registerValidationSchema } from "@/validation-schema/register.validation.schema";
 import { Formik } from "formik";
-import { TextField, Button, Typography, MenuItem } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  MenuItem,
+  Box,
+  LinearProgress,
+} from "@mui/material";
 import { genders, roles } from "@/constants/general.constant.js";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import $axios from "@/lib/axios/axios.instance";
 
 const RegisterPage = () => {
+  const router = useRouter();
+
+  const { isPending, error, data, mutate } = useMutation({
+    mutationKey: ["register-user"],
+    mutationFn: async (values) => {
+      return await $axios.post("/user/register", values);
+    },
+    onSuccess: () => {
+      router.push("/login");
+    },
+  });
   return (
     <div className="flex h-screen w-full">
       {/* Left Panel */}
@@ -18,7 +39,9 @@ const RegisterPage = () => {
 
       {/* Right Panel */}
       <div className="flex-1 flex justify-center items-center bg-gray-100">
-        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6">
+          {isPending && <LinearProgress sx={{ backgroundColor: "#033069" }} />}
+
           <Typography
             variant="h4"
             className="text-center font-bold text-gray-700 mb-6"
@@ -26,7 +49,6 @@ const RegisterPage = () => {
             Register
           </Typography>
 
-          {/* Form */}
           <Formik
             initialValues={{
               firstName: "",
@@ -37,8 +59,9 @@ const RegisterPage = () => {
               role: "",
             }}
             validationSchema={registerValidationSchema}
-            onSubmit={(values) => {
+            onSubmit={async (values) => {
               console.log(values);
+              mutate(values);
             }}
           >
             {(formik) => (
@@ -192,13 +215,15 @@ const RegisterPage = () => {
                   fullWidth
                   variant="contained"
                   color="success"
-                  className="py-3 text-lg bg-green-600 hover:bg-green-700"
+                  className="py-3 text-lg bg-green-600 hover:bg-green-700 b"
                 >
                   Register
                 </Button>
               </form>
             )}
           </Formik>
+
+          {/* Form */}
         </div>
       </div>
     </div>
