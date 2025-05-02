@@ -4,31 +4,31 @@ import validateReqBody from "../middleware/validate.req.body.js";
 import { bookingValidationSchema } from "./booking.validation.js";
 import Booking from "./booking.model.js";
 import mongoose from "mongoose";
+import validateMongoIdFromParams from "../middleware/validate.mongoid.js";
 
 const router = express.Router();
 
 //?make booking
 router.post(
-  "/post",
+  "/post/:id",
   isClient,
+  validateMongoIdFromParams,
   validateReqBody(bookingValidationSchema),
+
   async (req, res) => {
     const clientId = req.loggedInUserId;
 
-    const { testId, serviceType } = req.body;
+    const testId = req.params.id;
 
-    const validMongoId = mongoose.isValidObjectId(testId);
-
-    console.log(validMongoId);
-
-    if (!validMongoId) {
-      return res.status(404).send({ message: "Test not found" });
-    }
+    const { name, address, serviceType, note } = req.body;
 
     await Booking.create({
       clientId,
       testId,
+      name,
+      address,
       serviceType,
+      note,
     });
 
     return res.status(200).send({ message: "Appointment booked" });

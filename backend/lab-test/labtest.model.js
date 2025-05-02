@@ -23,7 +23,12 @@ const labTestSchema = new mongoose.Schema({
     required: true,
     min: 0,
   },
-  available: {
+  inPersonAvailable: {
+    type: Boolean, // Use Mongoose's Boolean type
+    required: true,
+    default: true,
+  },
+  homeServiceAvailable: {
     type: Boolean, // Use Mongoose's Boolean type
     required: true,
     default: true,

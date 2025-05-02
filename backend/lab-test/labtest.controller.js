@@ -55,10 +55,9 @@ router.put(
 );
 
 //? view lab tests by id
-
 router.get(
-  "listbyid/:id",
-  isAdmin,
+  "/listbyid/:id",
+  // isAdmin,
   validateMongoIdFromParams,
   async (req, res) => {
     //extract the from the request params
@@ -75,11 +74,11 @@ router.get(
   }
 );
 
-// //?view lab tests
-// router.get("/list", isUser, async (req, res) => {
-//   const testList = await LabTest.find();
-//   return res.status(200).send({ message: "List", testList });
-// });
+//?view lab tests all
+router.get("/list/all", async (req, res) => {
+  const testList = await LabTest.find();
+  return res.status(200).send({ message: "List", testList });
+});
 
 //? list labtest
 router.post(
@@ -104,10 +103,10 @@ router.post(
       {
         $project: {
           name: 1,
-
           inPersonPrice: 1,
           homeServicePrice: 1,
-          available: 1,
+          inPersonAvailable: 1,
+          homeServiceAvailable: 1,
         },
       },
     ]);
