@@ -37,7 +37,7 @@ const LoginPage = () => {
       {/* Right Panel */}
       <div className="flex-1 flex justify-center items-center bg-gray-100">
         <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6">
-          {isPEnding && <LinearProgress sx={{ backgroundColor: "#033069" }} />}
+          {isPending && <LinearProgress sx={{ backgroundColor: "#033069" }} />}
           <Typography variant="h4" className="text-center font-bold ">
             Sign In
           </Typography>

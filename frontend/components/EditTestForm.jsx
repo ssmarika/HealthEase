@@ -1,6 +1,5 @@
 "use client";
 
-import $axios from "@/lib/axios/axios.instance";
 import { labTestValidationSchema } from "@/validation-schema/add.test.schema";
 import {
   Button,
@@ -8,34 +7,16 @@ import {
   Typography,
   FormControlLabel,
   Checkbox,
-  LinearProgress,
 } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Formik } from "formik";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const AddTest = () => {
-  const router = useRouter();
-  const { isPending, error, mutate } = useMutation({
-    mutationKey: ["add-test"],
-    mutationFn: async (values) => {
-      return await $axios.post("/labtest/add", values, {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-        },
-      });
-    },
-    onSuccess: () => {
-      router.push("/");
-    },
-  });
   return (
-    <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg mx-auto mt-32">
-      {isPending && <LinearProgress />}
+    <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg mx-auto mt-8">
       <Typography variant="h4" className="text-center font-bold">
-        Add Test
+        Edit Test
       </Typography>
       <Formik
         initialValues={{
@@ -43,12 +24,25 @@ const AddTest = () => {
           description: "",
           inPersonPrice: "",
           homeServicePrice: "",
-          available: false, // Changed to boolean for checkbox
+          available: false,
         }}
         validationSchema={labTestValidationSchema}
-        onSubmit={(values) => {
-          console.log(values);
-          mutate(values);
+        onSubmit={async (values) => {
+          try {
+            const response = await axios.post(
+              "http://localhost:8080/labtest/add",
+              values,
+              {
+                headers: {
+                  Authorization: `Bearer ${window.localStorage.getItem(
+                    "token"
+                  )}`,
+                },
+              }
+            );
+          } catch (error) {
+            console.log("Error encountered");
+          }
         }}
       >
         {(formik) => {
@@ -146,7 +140,7 @@ const AddTest = () => {
               {/* Submit Button */}
               <Button
                 type="submit"
-                color="primary"
+                color="success"
                 variant="contained"
                 fullWidth
                 className="py-3 text-lg font-bold"
