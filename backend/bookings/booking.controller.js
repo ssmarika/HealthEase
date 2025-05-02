@@ -3,7 +3,7 @@ import { isAdmin, isClient } from "../middleware/authentication.js";
 import validateReqBody from "../middleware/validate.req.body.js";
 import { bookingValidationSchema } from "./booking.validation.js";
 import Booking from "./booking.model.js";
-import mongoose from "mongoose";
+
 import validateMongoIdFromParams from "../middleware/validate.mongoid.js";
 
 const router = express.Router();
@@ -20,7 +20,7 @@ router.post(
 
     const testId = req.params.id;
 
-    const { name, address, serviceType, note } = req.body;
+    const { name, address, serviceType, note, date, time } = req.body;
 
     await Booking.create({
       clientId,
@@ -29,6 +29,8 @@ router.post(
       address,
       serviceType,
       note,
+      date,
+      time,
     });
 
     return res.status(200).send({ message: "Appointment booked" });

@@ -12,6 +12,14 @@ const bookingSchema = new mongoose.Schema({
     enum: ["clinic visit", "home service"],
   },
   note: { type: String, maxlength: 300 },
+  date: {
+    type: Date,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
