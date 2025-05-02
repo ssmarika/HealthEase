@@ -12,7 +12,7 @@ import {
   LinearProgress,
   MenuItem,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Formik } from "formik";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
@@ -24,6 +24,17 @@ const BookingForm = () => {
     queryKey: ["test-info-id"],
     queryFn: async () => {
       return await $axios.get(`/labtest/listbyid/${params.id}`);
+    },
+  });
+
+  const { isLoading, error, mutate } = useMutation({
+    mutationKey: ["make-booking"],
+    mutationFn: async (values) => {
+      return await $axios.post(`/booking/post/${params.id}`, values, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
     },
   });
 
@@ -42,11 +53,18 @@ const BookingForm = () => {
         Test: {test?.name || "Loading..."}
       </Typography>
       <Formik
-        initialValues={{ name: "", address: "", serviceType: "", note: "" }}
+        initialValues={{
+          name: "",
+          address: "",
+          serviceType: "",
+          note: "",
+          date: "",
+          time: "",
+        }}
         validationSchema={bookingValidationSchema}
         onSubmit={(values) => {
           console.log(values);
-          //   mutate(values);
+          mutate(values);
         }}
       >
         {(formik) => {
@@ -120,6 +138,35 @@ const BookingForm = () => {
                     className="mt-1 text-sm text-red-500"
                   >
                     {formik.errors.serviceType}
+                  </Typography>
+                )}
+              </div>
+              <div>
+                <TextField
+                  fullWidth
+                  type="date"
+                  label="Date"
+                  InputLabelProps={{ shrink: true }}
+                  {...formik.getFieldProps("date")}
+                />
+                {formik.touched.date && formik.errors.date && (
+                  <Typography color="error" variant="body2">
+                    {formik.errors.date}
+                  </Typography>
+                )}
+              </div>
+
+              <div>
+                <TextField
+                  fullWidth
+                  type="time"
+                  label="Time"
+                  InputLabelProps={{ shrink: true }}
+                  {...formik.getFieldProps("time")}
+                />
+                {formik.touched.time && formik.errors.time && (
+                  <Typography color="error" variant="body2">
+                    {formik.errors.time}
                   </Typography>
                 )}
               </div>

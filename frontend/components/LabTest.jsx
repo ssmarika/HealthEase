@@ -19,7 +19,6 @@ const LabTest = () => {
     },
   });
   //console.log(data);
-  console.log("This is red");
 
   const labTestList = data?.data?.testList;
   console.log(labTestList);

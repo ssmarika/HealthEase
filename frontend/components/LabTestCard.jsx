@@ -9,7 +9,6 @@ const LabTestCard = (props) => {
   const testId = props._id;
   const router = useRouter();
   console.log(props);
-  console.log("This is red");
 
   return (
     <Box className="flex flex-col justify-between items-center rounded-lg shadow-lg w-sm h-96 border-2 border-blue-900 p-4 hover:scale-105 hover:shadow-xl transition-transform duration-300">
