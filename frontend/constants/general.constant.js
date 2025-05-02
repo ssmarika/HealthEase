@@ -20,3 +20,8 @@ export const images = [
   "/img2.png",
   "/img3.png",
 ];
+
+export const serviceType = [
+  { id: 1, serviceType: "clinic visit" },
+  { id: 2, serviceType: "home service" },
+];

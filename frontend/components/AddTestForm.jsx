@@ -43,7 +43,9 @@ const AddTest = () => {
           description: "",
           inPersonPrice: "",
           homeServicePrice: "",
-          available: false, // Changed to boolean for checkbox
+          inPersonAvailable: false,
+          homeServiceAvailable: false, // Changed to boolean for checkbox
+          // Changed to boolean for checkbox
         }}
         validationSchema={labTestValidationSchema}
         onSubmit={(values) => {
@@ -135,11 +137,24 @@ const AddTest = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      {...formik.getFieldProps("available")}
-                      checked={formik.values.available} // Bind the checkbox with formik state
+                      {...formik.getFieldProps("inPersonAvailable")}
+                      checked={formik.values.inPersonAvailable} // Bind the checkbox with formik state
                     />
                   }
-                  label="Available"
+                  label="Clinic Visit Available"
+                />
+              </div>
+
+              {/* Availability Checkbox */}
+              <div>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      {...formik.getFieldProps("homeServiceAvailable")}
+                      checked={formik.values.homeServiceAvailable} // Bind the checkbox with formik state
+                    />
+                  }
+                  label="Home Service Available"
                 />
               </div>
 

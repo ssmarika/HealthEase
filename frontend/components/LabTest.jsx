@@ -19,6 +19,7 @@ const LabTest = () => {
     },
   });
   //console.log(data);
+  console.log("This is red");
 
   const labTestList = data?.data?.testList;
   console.log(labTestList);
@@ -32,13 +33,33 @@ const LabTest = () => {
           return <LabTestCard key={item._id} {...item} />;
         })}
       </Box>
-      <Pagination
+      {/* <Pagination
         page={page}
         count={5}
         color="#033069"
         size="large"
         onChange={(_, value) => {
           setPage(value);
+        }}
+      /> */}
+      <Pagination
+        page={page}
+        count={5}
+        size="large"
+        onChange={(_, value) => {
+          setPage(value);
+        }}
+        sx={{
+          "& .MuiPaginationItem-root": {
+            color: "#033069", // Set the color of the numbers and default state
+          },
+          "& .Mui-selected": {
+            backgroundColor: "#033069", // Set the background color of the selected item
+            color: "#fff", // Set the text color of the selected item
+          },
+          "& .MuiPaginationItem-ellipsis": {
+            color: "#033069", // Set the color of the ellipsis (...)
+          },
         }}
       />
 
