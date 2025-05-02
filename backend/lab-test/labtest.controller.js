@@ -1,7 +1,10 @@
 import express from "express";
 import { isAdmin, isUser } from "../middleware/authentication.js";
 import validateReqBody from "../middleware/validate.req.body.js";
-import { labTestValidationSchema } from "./labtest.validation.js";
+import {
+  labTestValidationSchema,
+  paginationData,
+} from "./labtest.validation.js";
 import LabTest from "./labtest.model.js";
 import validateMongoIdFromParams from "../middleware/validate.mongoid.js";
 
@@ -51,6 +54,67 @@ router.put(
   }
 );
 
+//? view lab tests by id
+
+router.get(
+  "listbyid/:id",
+  isAdmin,
+  validateMongoIdFromParams,
+  async (req, res) => {
+    //extract the from the request params
+    const testId = req.params.id;
+
+    //find the lab test with the help of id
+    const labTest = await LabTest.findById(testId);
+
+    //if lab test not found throw error
+    if (!labTest) {
+      return res.status(401).send({ message: "Lab Test not available" });
+    }
+    return res.status(200).send({ message: "Test found", labTest });
+  }
+);
+
+// //?view lab tests
+// router.get("/list", isUser, async (req, res) => {
+//   const testList = await LabTest.find();
+//   return res.status(200).send({ message: "List", testList });
+// });
+
+//? list labtest
+router.post(
+  "/list",
+
+  validateReqBody(paginationData),
+  async (req, res) => {
+    const { page, limit, searchText } = req.body;
+
+    let match = {};
+
+    if (searchText) {
+      match = { name: { $regex: searchText, $options: "i" } };
+    }
+
+    const skip = (page - 1) * limit;
+
+    const testList = await LabTest.aggregate([
+      { $match: match },
+      { $skip: skip },
+      { $limit: limit },
+      {
+        $project: {
+          name: 1,
+
+          inPersonPrice: 1,
+          homeServicePrice: 1,
+          available: 1,
+        },
+      },
+    ]);
+    return res.status(200).send({ Message: "Lab Test List", testList });
+  }
+);
+
 //?delete lab test
 router.delete(
   "/delete/:id",
@@ -69,11 +133,5 @@ router.delete(
     return res.status(200).send({ message: "Deleted Successfully" });
   }
 );
-
-//?view lab tests
-router.get("/list", isUser, async (req, res) => {
-  const testDetail = await LabTest.find();
-  return res.status(200).send({ message: "List", testDetail });
-});
 
 export default router;
