@@ -8,4 +8,5 @@ export const bookingValidationSchema = yup.object({
   note: yup.string().max(300),
   date: yup.date().required(),
   time: yup.string().required(),
+  // testName: yup.string().required().trim(),
 });
