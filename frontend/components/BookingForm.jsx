@@ -57,7 +57,7 @@ const BookingForm = () => {
           name: "",
           address: "",
           serviceType: "",
-          note: "",
+          // note: "",
           date: "",
           time: "",
         }}
@@ -171,7 +171,7 @@ const BookingForm = () => {
                 )}
               </div>
 
-              <div>
+              {/* <div>
                 <TextField
                   fullWidth
                   label="Note"
@@ -186,7 +186,7 @@ const BookingForm = () => {
                     {formik.errors.note}
                   </Typography>
                 )}
-              </div>
+              </div> */}
               <div className="flex justify-center">
                 <Button
                   variant="contained"

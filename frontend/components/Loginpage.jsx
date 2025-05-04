@@ -19,7 +19,6 @@ const LoginPage = () => {
       window.localStorage.setItem("token", response?.data?.accessToken);
       window.localStorage.setItem("firstName", response?.data?.user?.firstName);
       window.localStorage.setItem("userRole", response?.data?.user?.role);
-      window.localStorage.setItem("id", response?.data?.user?._id);
 
       router.push("/");
     },

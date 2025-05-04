@@ -25,3 +25,9 @@ export const serviceType = [
   { id: 1, serviceType: "clinic visit" },
   { id: 2, serviceType: "home service" },
 ];
+
+export const bookingStatus = [
+  { id: 1, status: "pending" },
+  { id: 2, status: "confirmed" },
+  { id: 3, status: "cancelled" },
+];

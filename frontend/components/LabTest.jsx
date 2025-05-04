@@ -61,8 +61,6 @@ const LabTest = () => {
           },
         }}
       />
-
-      <div></div>
     </div>
   );
 };
