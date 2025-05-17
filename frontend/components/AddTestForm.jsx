@@ -158,16 +158,20 @@ const AddTest = () => {
                 />
               </div>
 
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                fullWidth
-                className="py-3 text-lg font-bold"
-              >
-                Add Test
-              </Button>
+              <div className="flex justify-center">
+                <Button
+                  variant="contained"
+                  type="submit"
+                  fullWidth
+                  sx={{
+                    alignContent: "center",
+                    backgroundColor: "#033069",
+                    "&:hover": { backgroundColor: "#022050" },
+                  }}
+                >
+                  Add Test
+                </Button>
+              </div>
             </form>
           );
         }}

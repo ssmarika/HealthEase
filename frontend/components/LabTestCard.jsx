@@ -50,6 +50,9 @@ const LabTestCard = (props) => {
           <>
             <Button
               variant="contained"
+              onClick={() => {
+                router.push(`/edit/${testId}`);
+              }}
               sx={{
                 backgroundColor: "#033069",
                 "&:hover": { backgroundColor: "#022050" },

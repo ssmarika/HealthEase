@@ -1,5 +1,6 @@
 "use client";
 
+import $axios from "@/lib/axios/axios.instance";
 import { labTestValidationSchema } from "@/validation-schema/add.test.schema";
 import {
   Button,
@@ -8,11 +9,33 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Formik } from "formik";
+import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
-const AddTest = () => {
+const EditTestForm = () => {
+  const params = useParams();
+  const router = useRouter();
+
+  const { isLoading, data } = useQuery({
+    queryKey: ["test-detail"],
+    queryFn: async () => {
+      return await $axios.get(`/labtest/listbyid/${params.id}`);
+    },
+  });
+  const test = data?.data?.labTest;
+
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["update-test"],
+    mutationFn: async (values) => {
+      return await $axios.put(`/labtest/update/${params.id}`, values);
+    },
+    onSuccess: () => {
+      return router.push("/labtest");
+    },
+  });
   return (
     <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg mx-auto mt-8">
       <Typography variant="h4" className="text-center font-bold">
@@ -20,29 +43,17 @@ const AddTest = () => {
       </Typography>
       <Formik
         initialValues={{
-          name: "",
-          description: "",
-          inPersonPrice: "",
-          homeServicePrice: "",
-          available: false,
+          name: test?.name || "",
+          description: test?.description || "",
+          inPersonPrice: test?.inPersonPrice || "",
+          homeServicePrice: test?.homeServicePrice || "",
+          inPersonAvailable: test?.inPersonAvailable || false,
+          homeServiceAvailable: test?.homeServiceAvailable || false,
         }}
+        enableReinitialize
         validationSchema={labTestValidationSchema}
-        onSubmit={async (values) => {
-          try {
-            const response = await axios.post(
-              "http://localhost:8080/labtest/add",
-              values,
-              {
-                headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "token"
-                  )}`,
-                },
-              }
-            );
-          } catch (error) {
-            console.log("Error encountered");
-          }
+        onSubmit={(values) => {
+          mutate(values);
         }}
       >
         {(formik) => {
@@ -129,24 +140,41 @@ const AddTest = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      {...formik.getFieldProps("available")}
-                      checked={formik.values.available} // Bind the checkbox with formik state
+                      {...formik.getFieldProps("inPersonAvailable")}
+                      checked={formik.values.inPersonAvailable} // Bind the checkbox with formik state
                     />
                   }
-                  label="Available"
+                  label="Clinic Visit Available"
                 />
               </div>
 
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                color="success"
-                variant="contained"
-                fullWidth
-                className="py-3 text-lg font-bold"
-              >
-                Add Test
-              </Button>
+              {/* Availability Checkbox */}
+              <div>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      {...formik.getFieldProps("homeServiceAvailable")}
+                      checked={formik.values.homeServiceAvailable} // Bind the checkbox with formik state
+                    />
+                  }
+                  label="Home Service Available"
+                />
+              </div>
+
+              <div className="flex justify-center">
+                <Button
+                  variant="contained"
+                  type="submit"
+                  fullWidth
+                  sx={{
+                    alignContent: "center",
+                    backgroundColor: "#033069",
+                    "&:hover": { backgroundColor: "#022050" },
+                  }}
+                >
+                  Edit Test
+                </Button>
+              </div>
             </form>
           );
         }}
@@ -155,4 +183,4 @@ const AddTest = () => {
   );
 };
 
-export default AddTest;
+export default EditTestForm;

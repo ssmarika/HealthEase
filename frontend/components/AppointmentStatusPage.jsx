@@ -18,8 +18,8 @@ const AppointmentStatusPage = () => {
 
   const { isLoading: adminLoading, data: adminData } = useQuery({
     queryKey: ["status-list-admin", page],
-    queryFn: () => {
-      return $axios.post(
+    queryFn: async () => {
+      return await $axios.post(
         `booking/adminlist/${status}`,
         { page, limit: 4 },
         {
@@ -34,8 +34,8 @@ const AppointmentStatusPage = () => {
 
   const { isLoading: clientLoading, data: clientData } = useQuery({
     queryKey: ["status-list-client", page],
-    queryFn: () => {
-      return $axios.post(
+    queryFn: async () => {
+      return await $axios.post(
         `booking/clientlist/${status}`,
         { page, limit: 4 },
         {

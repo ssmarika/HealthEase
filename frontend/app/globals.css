@@ -9,6 +9,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-custom: #033069;
+  --color-customHover: #022050;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
