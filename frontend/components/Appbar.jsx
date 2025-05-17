@@ -493,14 +493,24 @@ function ResponsiveAppBar() {
               "aria-labelledby": "appointments-menu-button",
             }}
           >
-            <MenuItem onClick={() => handleNavigateTo("/appointment")}>
-              Book Appointment
+            <MenuItem onClick={() => handleNavigateTo("/appointment/list")}>
+              All Appointment
             </MenuItem>
-            <MenuItem onClick={() => handleNavigateTo("/view-appointments")}>
-              View Appointments
+            <MenuItem onClick={() => handleNavigateTo("/appointment/pending")}>
+              Pending Appointments
             </MenuItem>
-            <MenuItem onClick={() => handleNavigateTo("/cancel-appointment")}>
-              Cancel Appointment
+            <MenuItem onClick={() => handleNavigateTo("/appointment/approved")}>
+              Approved Appointments
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleNavigateTo("/appointment/cancelled")}
+            >
+              Cancelled Appointments
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleNavigateTo("/appointment/completed")}
+            >
+              Completed Appointments
             </MenuItem>
           </Menu>
 

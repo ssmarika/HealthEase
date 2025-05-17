@@ -23,7 +23,7 @@ const AppointmentPage = () => {
     queryFn: async () => {
       return await $axios.post(
         "booking/clientlist",
-        { page, limit: 8 },
+        { page, limit: 4 },
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
@@ -39,7 +39,7 @@ const AppointmentPage = () => {
     queryFn: async () => {
       return await $axios.post(
         "booking/adminlist",
-        { page, limit: 8 },
+        { page, limit: 4 },
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
