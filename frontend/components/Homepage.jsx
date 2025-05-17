@@ -30,7 +30,7 @@ function Homepage() {
       <ResponsiveAppBar />
 
       {/* Hero Section */}
-      <div className="mt-16 bg-green-800 text-white min-h-[70vh] flex items-center justify-between px-4 flex-col md:flex-row">
+      <div className="mt-16 bg-custom text-white min-h-[70vh] flex items-center justify-between px-4 flex-col md:flex-row">
         {/* Text Section */}
         <h3 className="text-3xl font-bold text-center md:text-left mb-4 md:mb-0">
           Medical services at your doorstep
@@ -54,7 +54,7 @@ function Homepage() {
 
       {/* Icons Section */}
       <div className="py-6">
-        <h4 className="text-2xl font-bold text-center mb-4 text-green-800">
+        <h4 className="text-2xl font-bold text-center mb-4 text-custom">
           Explore Our Services
         </h4>
 
@@ -62,7 +62,7 @@ function Homepage() {
           {/* Lab Test Icon */}
           <div className="flex flex-col items-center text-center">
             <LabTestIcon
-              className="text-green-700 mb-2"
+              className="text-custom mb-2"
               style={{ fontSize: "60px" }}
             />
             <p className="text-lg font-semibold">Lab Test</p>
@@ -71,7 +71,7 @@ function Homepage() {
           {/* Blogs Icon */}
           <div className="flex flex-col items-center text-center">
             <BlogIcon
-              className="text-green-700 mb-2"
+              className="text-custom mb-2"
               style={{ fontSize: "60px" }}
             />
             <p className="text-lg font-semibold">Blogs</p>
@@ -80,7 +80,7 @@ function Homepage() {
           {/* Testimony Icon */}
           <div className="flex flex-col items-center text-center">
             <TestimonyIcon
-              className="text-green-700 mb-2"
+              className="text-custom mb-2"
               style={{ fontSize: "60px" }}
             />
             <p className="text-lg font-semibold">Testimony</p>

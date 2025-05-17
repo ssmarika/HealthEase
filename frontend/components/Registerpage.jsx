@@ -9,6 +9,7 @@ import {
   MenuItem,
   Box,
   LinearProgress,
+  colors,
 } from "@mui/material";
 import { genders, roles } from "@/constants/general.constant.js";
 import { useRouter } from "next/navigation";
@@ -30,7 +31,7 @@ const RegisterPage = () => {
   return (
     <div className="flex h-screen w-full">
       {/* Left Panel */}
-      <div className="flex-1 bg-green-600 flex flex-col justify-center items-center text-white p-8">
+      <div className="flex-1 bg-custom flex flex-col justify-center items-center text-white p-8">
         <h1 className="text-4xl font-bold">E-pharma</h1>
         <p className="mt-4 text-center text-lg">
           Create your account and join our platform today!
@@ -210,12 +211,22 @@ const RegisterPage = () => {
                 </div>
 
                 {/* Submit Button */}
+                {/* <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  className="py-3 text-lg bg-custom hover:bg-custom-700 b"
+                >
+                  Register
+                </Button> */}
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
-                  color="success"
-                  className="py-3 text-lg bg-green-600 hover:bg-green-700 b"
+                  sx={{
+                    backgroundColor: "#033069",
+                    "&:hover": { backgroundColor: "#022050" },
+                  }}
                 >
                   Register
                 </Button>

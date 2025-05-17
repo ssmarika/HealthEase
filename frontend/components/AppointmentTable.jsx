@@ -1,4 +1,5 @@
-import * as React from "react";
+"use client";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,50 +7,114 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { isAdmin } from "@/utils/role.check";
+import { MenuItem, Select, Typography } from "@mui/material";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import $axios from "@/lib/axios/axios.instance";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+const AppointmentTable = ({ appointments = [] }) => {
+  //   const { appointments } = props;
+  console.log(appointments);
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+  const queryClient = useQueryClient();
 
-export default function BasicTable() {
+  const { isLoading, mutate } = useMutation({
+    mutationKey: ["update-status"],
+    mutationFn: async ({ id, status }) => {
+      console.log(id, status);
+      return await $axios.put(
+        `/booking/status/${id}`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        }
+      );
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries("admin-list");
+    },
+  });
+
+  const handleStatusChange = (id, newStatus) => {
+    mutate({ id, status: newStatus });
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{ marginTop: "2rem" }}>
+      <Table sx={{ minWidth: 650 }} aria-label="appointment table">
         <TableHead>
           <TableRow>
-            <TableCell>Pathology</TableCell>
-            <TableCell align="right">Customer name</TableCell>
-            <TableCell align="right">Address</TableCell>
-            <TableCell align="right">Date</TableCell>
-            <TableCell align="right">Time</TableCell>
-            <TableCell align="right">Status</TableCell>
+            {[
+              "Customer Name",
+              "Test Name",
+              "Address",
+              "Date",
+              "Time",
+              "Service Type",
+              "Status",
+            ].map((header) => (
+              <TableCell
+                key={header}
+                align="center"
+                sx={{ fontWeight: "bold" }}
+              >
+                {header}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
+          {appointments.length > 0 ? (
+            appointments.map((row, index) => (
+              <TableRow key={row._id || index}>
+                <TableCell align="center">{row.name}</TableCell>
+                <TableCell align="center">{row.testName}</TableCell>
+                <TableCell align="center">{row.address}</TableCell>
+                <TableCell align="center">
+                  {new Date(row.date).toLocaleDateString()}
+                </TableCell>
+                <TableCell align="center">
+                  {new Date(row.date).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </TableCell>
+                <TableCell align="center">{row.serviceType}</TableCell>
+
+                <TableCell align="center">
+                  {isAdmin() ? (
+                    <Select
+                      value={row.status} // Current status shown here
+                      onChange={(e) =>
+                        handleStatusChange(row._id, e.target.value)
+                      }
+                      size="small"
+                      sx={{ minWidth: 120 }}
+                    >
+                      <MenuItem value="pending">Pending</MenuItem>
+                      <MenuItem value="approved">Approved</MenuItem>
+                      <MenuItem value="completed">Completed</MenuItem>
+                      <MenuItem value="cancelled">Cancelled</MenuItem>
+                    </Select>
+                  ) : (
+                    <Typography variant="body2">{row.status}</Typography>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={6} align="center">
+                No Appointments Available
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default AppointmentTable;

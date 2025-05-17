@@ -26,7 +26,7 @@ const LoginPage = () => {
   return (
     <div className="flex h-screen w-full">
       {/* Left Panel */}
-      <div className="flex-1 bg-green-600 flex flex-col justify-center items-center text-white p-8">
+      <div className="flex-1 bg-custom flex flex-col justify-center items-center text-white p-8">
         <h1 className="text-4xl font-bold">E-pharma</h1>
         <p className="mt-4 text-center text-lg">
           Create is simply your account text of printing and typesetting
@@ -98,8 +98,10 @@ const LoginPage = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  color="success"
-                  className="py-3 text-lg bg-blue-600 hover:bg-blue-700"
+                  sx={{
+                    backgroundColor: "#033069",
+                    "&:hover": { backgroundColor: "#022050" },
+                  }}
                 >
                   Sign In
                 </Button>
