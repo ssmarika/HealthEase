@@ -119,23 +119,43 @@ router.delete(
   }
 );
 
-export default router;
-
 // //?update the booking status
-// router.put(
-//   "/status/:id",
-//   isAdmin,
-//   validateMongoIdFromParams,
-//   async (req, res) => {
-//     const bookingId = req.params.id;
+router.put(
+  "/status/:id",
+  isAdmin,
+  // validateMongoIdFromParams,
+  async (req, res) => {
+    const bookingId = req.params.id;
 
-//     const booking = await Booking.findById(bookingId);
+    const { status } = req.body;
 
-//     if (!booking) {
-//       return res.status(401).send({ message: "Appointment does not exist" });
-//     }
+    console.log(status);
 
-//     await Booking.updateOne({ _id: bookingId }, {$set: });
-//     return res.status(200).send({ message: "Updated" });
-//   }
-// );
+    const booking = await Booking.findById(bookingId);
+
+    if (!booking) {
+      return res.status(401).send({ message: "Appointment does not exist" });
+    }
+
+    await Booking.updateOne({ _id: bookingId }, { $set: { status } });
+
+    return res.status(200).send({ message: "Updating" });
+  }
+);
+
+//? appointment as per the status for admin
+router.post("/statuslist", isAdmin, async (req, res) => {
+  const { status } = req.body;
+
+  const bookingList = await Booking.find({ status });
+  return res.status(200).send({ message: "StatusList", bookingList });
+});
+
+//? status from body
+router.get("/list/:status", async (req, res) => {
+  const { status } = req.params;
+  // console.log(status);
+  const bookingList = await Booking.find({ status });
+  return res.status(200).send({ message: "StatusList", bookingList });
+});
+export default router;

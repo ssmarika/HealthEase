@@ -57,7 +57,6 @@ router.put(
 //? view lab tests by id
 router.get(
   "/listbyid/:id",
-  // isAdmin,
   validateMongoIdFromParams,
   async (req, res) => {
     //extract the from the request params

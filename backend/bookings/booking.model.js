@@ -11,7 +11,7 @@ const bookingSchema = new mongoose.Schema({
     required: true,
     enum: ["clinic visit", "home service"],
   },
-  note: { type: String, maxlength: 300 },
+  // note: { type: String, maxlength: 300 },
   date: {
     type: Date,
     required: true,
@@ -25,7 +25,7 @@ const bookingSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ["pending", "conformed", "cancelled", "completed"],
+    enum: ["pending", "approved", "cancelled", "completed"],
   },
 });
 
