@@ -4,6 +4,7 @@ import React from "react";
 import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import { isAdmin, isClient } from "@/utils/role.check";
 import { useRouter } from "next/navigation";
+import DeleteTestDialog from "./DeleteDialogueBox";
 
 const LabTestCard = (props) => {
   const testId = props._id;
@@ -60,15 +61,8 @@ const LabTestCard = (props) => {
             >
               Edit
             </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#033069",
-                "&:hover": { backgroundColor: "#022050" },
-              }}
-            >
-              Delete
-            </Button>
+
+            <DeleteTestDialog testId={testId} />
           </>
         )}
         {isClient() && (

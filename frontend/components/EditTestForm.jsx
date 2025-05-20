@@ -14,6 +14,7 @@ import axios from "axios";
 import { Formik } from "formik";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
+import Loader from "./Loader";
 
 const EditTestForm = () => {
   const params = useParams();
@@ -36,8 +37,13 @@ const EditTestForm = () => {
       return router.push("/labtest");
     },
   });
+
+  if (isLoading || isPending) {
+    return <Loader />;
+  }
+
   return (
-    <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg mx-auto mt-8">
+    <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg mx-auto mt-16">
       <Typography variant="h4" className="text-center font-bold">
         Edit Test
       </Typography>

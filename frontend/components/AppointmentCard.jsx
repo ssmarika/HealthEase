@@ -26,6 +26,10 @@ const AppointmentCard = (props) => {
     },
   });
 
+  if (isPending) {
+    return <Loader />;
+  }
+
   const handleStatusChange = (event) => {
     const newStatus = event.target.value;
     setStatus(newStatus);

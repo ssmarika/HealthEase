@@ -6,11 +6,12 @@ import { TextField, Button, Typography, LinearProgress } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import $axios from "@/lib/axios/axios.instance";
+import Loader from "./Loader";
 
 const LoginPage = () => {
   const router = useRouter();
 
-  const { isPending, error, data, mutate } = useMutation({
+  const { isPending, error, mutate } = useMutation({
     mutationFn: ["login-user"],
     mutationFn: async (values) => {
       return await $axios.post("/user/login", values);
@@ -23,6 +24,9 @@ const LoginPage = () => {
       router.push("/");
     },
   });
+  if (isPending) {
+    return <Loader />;
+  }
   return (
     <div className="flex h-screen w-full">
       {/* Left Panel */}

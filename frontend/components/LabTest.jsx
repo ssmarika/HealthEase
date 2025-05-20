@@ -1,13 +1,18 @@
 "use Client";
-import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-
 import { useQuery } from "@tanstack/react-query";
 import $axios from "@/lib/axios/axios.instance";
 import LabTestCard from "./LabTestCard";
+import Loader from "./Loader";
+import { isAdmin } from "@/utils/role.check";
+import { useRouter } from "next/navigation";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 const LabTest = () => {
   const [page, setPage] = useState(1);
+
+  const router = useRouter();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["lab-test-list", page],
@@ -18,29 +23,41 @@ const LabTest = () => {
       });
     },
   });
-  //console.log(data);
 
   const labTestList = data?.data?.testList;
   console.log(labTestList);
+
+  if (isPending) {
+    return <Loader />;
+  }
   return (
     <div className="flex flex-col justify-between items-center h-screen w-full mt-18 p-8 ">
       <Typography variant="h4" sx={{ color: "#033069", fontWeight: "bold" }}>
         Diagnostics Pathalogy
       </Typography>
+
+      {isAdmin() && (
+        <Button
+          variant="contained"
+          startIcon={<AddRoundedIcon />}
+          onClick={() => {
+            router.push("/add");
+          }}
+          sx={{
+            alignContent: "center",
+            backgroundColor: "#033069",
+            "&:hover": { backgroundColor: "#022050" },
+          }}
+        >
+          Add Test
+        </Button>
+      )}
       <Box className="flex justify-center space-x-8">
         {labTestList?.map((item) => {
           return <LabTestCard key={item._id} {...item} />;
         })}
       </Box>
-      {/* <Pagination
-        page={page}
-        count={5}
-        color="#033069"
-        size="large"
-        onChange={(_, value) => {
-          setPage(value);
-        }}
-      /> */}
+
       <Pagination
         page={page}
         count={5}

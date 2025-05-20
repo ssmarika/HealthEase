@@ -11,6 +11,7 @@ import { isAdmin } from "@/utils/role.check";
 import { MenuItem, Select, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import $axios from "@/lib/axios/axios.instance";
+import Loader from "./Loader";
 
 const AppointmentTable = ({ appointments = [] }) => {
   //   const { appointments } = props;
@@ -37,6 +38,9 @@ const AppointmentTable = ({ appointments = [] }) => {
     },
   });
 
+  if (isLoading) {
+    return <Loader />;
+  }
   const handleStatusChange = (id, newStatus) => {
     mutate({ id, status: newStatus });
   };

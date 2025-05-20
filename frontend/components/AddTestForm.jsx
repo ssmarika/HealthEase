@@ -15,6 +15,7 @@ import axios from "axios";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
+import Loader from "./Loader";
 
 const AddTest = () => {
   const router = useRouter();
@@ -31,6 +32,9 @@ const AddTest = () => {
       router.push("/");
     },
   });
+  if (isPending) {
+    return <Loader />;
+  }
   return (
     <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg mx-auto mt-32">
       {isPending && <LinearProgress />}
@@ -44,8 +48,7 @@ const AddTest = () => {
           inPersonPrice: "",
           homeServicePrice: "",
           inPersonAvailable: false,
-          homeServiceAvailable: false, // Changed to boolean for checkbox
-          // Changed to boolean for checkbox
+          homeServiceAvailable: false,
         }}
         validationSchema={labTestValidationSchema}
         onSubmit={(values) => {

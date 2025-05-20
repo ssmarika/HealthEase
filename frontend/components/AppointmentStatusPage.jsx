@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import AppointmentTable from "./AppointmentTable";
 import { Pagination, Typography } from "@mui/material";
 import { isAdmin, isClient } from "@/utils/role.check";
+import Loader from "./Loader";
 
 const AppointmentStatusPage = () => {
   const [page, setPage] = useState(1);
@@ -48,6 +49,10 @@ const AppointmentStatusPage = () => {
     enabled: isClient,
   });
 
+  if (clientLoading || adminLoading) {
+    return <Loader />;
+  }
+
   const appointment = isAdmin()
     ? adminData?.data?.bookingList || []
     : clientData?.data?.bookingList || [];
@@ -64,12 +69,11 @@ const AppointmentStatusPage = () => {
       <AppointmentTable appointments={appointment} />
 
       <Pagination
-        count={10} // Replace this with dynamic count from your API
+        count={10}
         page={page}
         onChange={(event, value) => setPage(value)}
         sx={{ marginTop: "2rem" }}
       />
-      {/* <FixedBottomNavigation /> */}
     </div>
   );
 };

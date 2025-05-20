@@ -16,6 +16,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Formik } from "formik";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
+import Loader from "./Loader";
 
 const BookingForm = () => {
   const params = useParams();
@@ -40,6 +41,10 @@ const BookingForm = () => {
 
   const test = data?.data?.labTest;
   console.log(test);
+
+  if (isLoading || isPending) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg mx-auto mt-32">
@@ -171,22 +176,6 @@ const BookingForm = () => {
                 )}
               </div>
 
-              {/* <div>
-                <TextField
-                  fullWidth
-                  label="Note"
-                  {...formik.getFieldProps("note")}
-                />
-                {formik.touched.note && formik.errors.note && (
-                  <Typography
-                    color="error"
-                    variant="body2"
-                    className="mt-1 text-sm text-red-500"
-                  >
-                    {formik.errors.note}
-                  </Typography>
-                )}
-              </div> */}
               <div className="flex justify-center">
                 <Button
                   variant="contained"

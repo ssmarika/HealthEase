@@ -11,19 +11,23 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import $axios from "@/lib/axios/axios.instance";
 import Loader from "./Loader";
 
-const DeleteProductDialog = (props) => {
+const DeleteTestDialog = (props) => {
   const [open, setOpen] = React.useState(false);
 
   //   for the refetch query
   const queryClient = useQueryClient();
 
   const { isPending, mutate } = useMutation({
-    mutationKey: ["delete-product"],
+    mutationKey: ["delete-test"],
     mutationFn: async () => {
-      return await $axios.delete(`/product/delete/${props.productId}`);
+      return await $axios.delete(`/labtest/delete/${props.testId}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
     },
     onSuccess: () => {
-      queryClient.refetchQueries("seller-product-list");
+      queryClient.refetchQueries("lab-test-list");
     },
     onError: (error) => {
       console.log(error);
@@ -88,4 +92,4 @@ const DeleteProductDialog = (props) => {
   );
 };
 
-export default DeleteProductDialog;
+export default DeleteTestDialog;

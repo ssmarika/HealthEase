@@ -15,11 +15,7 @@ export const genders = [
   { id: 3, gender: "others" },
 ];
 
-export const images = [
-  "/img1.png", // Replace with your image paths
-  "/img2.png",
-  "/img3.png",
-];
+export const images = ["/img1.png", "/img2.png", "/img3.png"];
 
 export const serviceType = [
   { id: 1, serviceType: "clinic visit" },

@@ -19,7 +19,7 @@ import $axios from "@/lib/axios/axios.instance";
 const RegisterPage = () => {
   const router = useRouter();
 
-  const { isPending, error, data, mutate } = useMutation({
+  const { isPending, error, mutate } = useMutation({
     mutationKey: ["register-user"],
     mutationFn: async (values) => {
       return await $axios.post("/user/register", values);
@@ -28,6 +28,9 @@ const RegisterPage = () => {
       router.push("/login");
     },
   });
+  if (isPending) {
+    return <Loader />;
+  }
   return (
     <div className="flex h-screen w-full">
       {/* Left Panel */}
