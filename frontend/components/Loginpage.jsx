@@ -2,14 +2,34 @@
 
 import { loginValidationSchema } from "@/validation-schema/login.validation.schema";
 import { Formik } from "formik";
-import { TextField, Button, Typography, LinearProgress } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  LinearProgress,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+  FormHelperText,
+} from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import $axios from "@/lib/axios/axios.instance";
 import Loader from "./Loader";
+import React from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Link from "next/link";
 
 const LoginPage = () => {
   const router = useRouter();
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => event.preventDefault();
+  const handleMouseUpPassword = (event) => event.preventDefault();
 
   const { isPending, error, mutate } = useMutation({
     mutationFn: ["login-user"],
@@ -31,10 +51,10 @@ const LoginPage = () => {
     <div className="flex h-screen w-full">
       {/* Left Panel */}
       <div className="flex-1 bg-custom flex flex-col justify-center items-center text-white p-8">
-        <h1 className="text-4xl font-bold">E-pharma</h1>
+        <h1 className="text-4xl font-bold">HealthEase</h1>
         <p className="mt-4 text-center text-lg">
-          Create is simply your account text of printing and typesetting
-          industry.
+          Access reliable lab tests, appointments, and health resources from the
+          comfort of your home.
         </p>
       </div>
 
@@ -78,23 +98,36 @@ const LoginPage = () => {
                 </div>
 
                 {/* Password Field */}
+
                 <div>
-                  <TextField
-                    fullWidth
-                    label="Password"
-                    variant="outlined"
-                    {...formik.getFieldProps("password")}
-                    className="mt-1"
-                  />
-                  {formik.touched.password && formik.errors.password && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
-                      {formik.errors.password}
-                    </Typography>
-                  )}
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-password"
+                      type={showPassword ? "text" : "password"}
+                      {...formik.getFieldProps("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            onMouseUp={handleMouseUpPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                      <FormHelperText error>
+                        {formik.errors.password}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
                 </div>
 
                 {/* Submit Button */}
@@ -109,19 +142,17 @@ const LoginPage = () => {
                 >
                   Sign In
                 </Button>
+                <div className="flex justify-center">
+                  <Link
+                    href="/register"
+                    className="text-md underline text-custom mt-4"
+                  >
+                    New user? Sign up
+                  </Link>
+                </div>
               </form>
             )}
           </Formik>
-
-          {/* Forgot Password */}
-          <div className="text-center mt-4">
-            <a
-              href="/forgot-password"
-              className="text-blue-600 hover:underline text-sm"
-            >
-              Forgot Password?
-            </a>
-          </div>
         </div>
       </div>
     </div>

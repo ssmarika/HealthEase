@@ -12,9 +12,10 @@ import {
   Chat as TestimonyIcon,
 } from "@mui/icons-material";
 import BiotechIcon from "@mui/icons-material/Biotech";
-import { Button } from "@mui/material";
+import MonitorHeartRoundedIcon from "@mui/icons-material/MonitorHeartRounded";
+import AddShoppingCartRoundedIcon from "@mui/icons-material/AddShoppingCartRounded";
 
-function Homepage() {
+const Homepage = () => {
   // React Slick settings for the carousel
   const sliderSettings = {
     dots: true,
@@ -34,7 +35,7 @@ function Homepage() {
       <ResponsiveAppBar />
 
       {/* Hero Section */}
-      <section className="mt-20 relative flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-10 bg-gradient-to-r from-custom via-blue-900 to-custom text-white rounded-b-[40px] shadow-xl">
+      <section className="mt-20 relative flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-10 bg-gradient-to-r from-custom via-blue-900 to-custom text-white  shadow-xl">
         <div className="flex-1 flex flex-col items-start justify-center gap-6">
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg mb-2">
             Medical Services
@@ -45,12 +46,6 @@ function Homepage() {
             Access reliable lab tests, appointments, and health resources from
             the comfort of your home.
           </p>
-          <Button
-            className="px-7 py-3 bg-white text-custom font-bold rounded-full shadow-lg hover:bg-blue-50 transition mt-2"
-            onClick={() => window.scrollTo({ top: 650, behavior: "smooth" })}
-          >
-            Book Appointment
-          </Button>
         </div>
 
         <div className="w-[80%] md:w-[40%] h-[300px] rounded-lg overflow-hidden shadow-2xl my-8 md:my-0 ">
@@ -79,11 +74,11 @@ function Homepage() {
           </h2>
         </div>
         <p className="text-base md:text-lg text-gray-600 text-center max-w-xl mb-6">
-          Quick, easy, and convenient health scheduling at your fingertips. Get
-          expert medical consultation and lab tests—anytime, anywhere.
+          Quick, easy, and convenient health scheduling at your fingertips. Easy
+          at-home sample collection and accurate reporting.
         </p>
         <a
-          href="/appointment/list"
+          href="/labtest"
           className="px-8 py-3 bg-custom hover:bg-blue-900 text-white font-semibold rounded-full shadow-lg transition"
         >
           Book Now
@@ -97,18 +92,18 @@ function Homepage() {
         </h4>
         <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24">
           {/* Lab Test Icon */}
-          <div className="flex flex-col items-center text-center bg-white py-8 px-6 rounded-2xl shadow-md border border-blue-100 hover:shadow-xl transition">
-            <LabTestIcon
+          <div className="flex flex-col items-center text-center bg-white py-8 px-6 rounded-2xl shadow-md border border-blue-100 hover:shadow-xl transition w-90 h-50">
+            <MonitorHeartRoundedIcon
               className="text-custom mb-2"
               style={{ fontSize: "60px" }}
             />
-            <p className="text-xl font-semibold">Lab Test</p>
+            <p className="text-xl font-semibold">Doctor Consultation</p>
             <span className="text-gray-500 text-sm mt-2">
-              Easy at-home sample collection and accurate reporting.
+              Get expert medical consultation —anytime, anywhere.
             </span>
           </div>
           {/* Blogs Icon */}
-          <div className="flex flex-col items-center text-center bg-white py-8 px-6 rounded-2xl shadow-md border border-blue-100 hover:shadow-xl transition">
+          <div className="flex flex-col items-center text-center bg-white py-8 px-6 rounded-2xl shadow-md border border-blue-100 hover:shadow-xl transition w-90 h-50">
             <BlogIcon
               className="text-custom mb-2"
               style={{ fontSize: "60px" }}
@@ -119,20 +114,23 @@ function Homepage() {
             </span>
           </div>
           {/* Testimony Icon */}
-          <div className="flex flex-col items-center text-center bg-white py-8 px-6 rounded-2xl shadow-md border border-blue-100 hover:shadow-xl transition">
-            <TestimonyIcon
+          <div className="flex flex-col items-center text-center bg-white py-8 px-6 rounded-2xl shadow-md border border-blue-100 hover:shadow-xl transition w-90 h-50">
+            <AddShoppingCartRoundedIcon
               className="text-custom mb-2"
               style={{ fontSize: "60px" }}
             />
-            <p className="text-xl font-semibold">Testimony</p>
+            <p className="text-xl font-semibold">E-pharmacy</p>
             <span className="text-gray-500 text-sm mt-2">
-              Real experiences from our users and success stories.
+              Get wide variety of product online.
             </span>
           </div>
         </div>
       </section>
+
+      {/* contact section*/}
+      <scetion></scetion>
     </div>
   );
-}
+};
 
 export default Homepage;

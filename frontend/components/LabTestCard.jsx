@@ -40,6 +40,9 @@ const LabTestCard = (props) => {
       <Box className="mt-auto flex flex-wrap justify-center gap-4">
         <Button
           variant="contained"
+          onClick={() => {
+            router.push(`/labtestdetail/${testId}`);
+          }}
           sx={{
             backgroundColor: "#033069",
             "&:hover": { backgroundColor: "#022050" },

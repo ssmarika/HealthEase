@@ -7,48 +7,56 @@ import {
   Button,
   Typography,
   MenuItem,
-  Box,
   LinearProgress,
-  colors,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+  FormHelperText,
+  FormControl,
 } from "@mui/material";
 import { genders, roles } from "@/constants/general.constant.js";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import $axios from "@/lib/axios/axios.instance";
+import React from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Link from "next/link";
 
 const RegisterPage = () => {
   const router = useRouter();
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => event.preventDefault();
+  const handleMouseUpPassword = (event) => event.preventDefault();
 
   const { isPending, error, mutate } = useMutation({
     mutationKey: ["register-user"],
-    mutationFn: async (values) => {
-      return await $axios.post("/user/register", values);
-    },
-    onSuccess: () => {
-      router.push("/login");
-    },
+    mutationFn: async (values) => await $axios.post("/user/register", values),
+    onSuccess: () => router.push("/login"),
   });
-  if (isPending) {
-    return <Loader />;
-  }
+
+  if (isPending) return <LinearProgress sx={{ backgroundColor: "#033069" }} />;
+
   return (
     <div className="flex h-screen w-full">
       {/* Left Panel */}
-      <div className="flex-1 bg-custom flex flex-col justify-center items-center text-white p-8">
-        <h1 className="text-4xl font-bold">E-pharma</h1>
-        <p className="mt-4 text-center text-lg">
+      <div className="flex-1 bg-custom flex flex-col justify-center items-center text-white p-10">
+        <h1 className="text-4xl font-bold">HealthEase</h1>
+        <p className="mt-4 text-lg text-center">
           Create your account and join our platform today!
+          <br /> Access reliable lab tests, appointments, and health resources
+          from the comfort of your home.
         </p>
       </div>
 
       {/* Right Panel */}
       <div className="flex-1 flex justify-center items-center bg-gray-100">
-        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6">
-          {isPending && <LinearProgress sx={{ backgroundColor: "#033069" }} />}
-
+        <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg space-y-6">
           <Typography
             variant="h4"
-            className="text-center font-bold text-gray-700 mb-6"
+            className="text-center font-semibold text-gray-700"
           >
             Register
           </Typography>
@@ -63,14 +71,11 @@ const RegisterPage = () => {
               role: "",
             }}
             validationSchema={registerValidationSchema}
-            onSubmit={async (values) => {
-              console.log(values);
-              mutate(values);
-            }}
+            onSubmit={(values) => mutate(values)}
           >
             {(formik) => (
-              <form onSubmit={formik.handleSubmit} className="space-y-4">
-                {/* First Name Field */}
+              <form onSubmit={formik.handleSubmit} className="space-y-5">
+                {/* First Name */}
                 <div>
                   <TextField
                     fullWidth
@@ -79,17 +84,13 @@ const RegisterPage = () => {
                     {...formik.getFieldProps("firstName")}
                   />
                   {formik.touched.firstName && formik.errors.firstName && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
+                    <Typography variant="body2" color="error" className="mt-1">
                       {formik.errors.firstName}
                     </Typography>
                   )}
                 </div>
 
-                {/* Last Name Field */}
+                {/* Last Name */}
                 <div>
                   <TextField
                     fullWidth
@@ -98,17 +99,13 @@ const RegisterPage = () => {
                     {...formik.getFieldProps("lastName")}
                   />
                   {formik.touched.lastName && formik.errors.lastName && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
+                    <Typography variant="body2" color="error" className="mt-1">
                       {formik.errors.lastName}
                     </Typography>
                   )}
                 </div>
 
-                {/* Email Field */}
+                {/* Email */}
                 <div>
                   <TextField
                     fullWidth
@@ -117,47 +114,55 @@ const RegisterPage = () => {
                     {...formik.getFieldProps("email")}
                   />
                   {formik.touched.email && formik.errors.email && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
+                    <Typography variant="body2" color="error" className="mt-1">
                       {formik.errors.email}
                     </Typography>
                   )}
                 </div>
 
-                {/* Password Field */}
+                {/* Password */}
                 <div>
-                  <TextField
-                    fullWidth
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    {...formik.getFieldProps("password")}
-                  />
-                  {formik.touched.password && formik.errors.password && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
-                      {formik.errors.password}
-                    </Typography>
-                  )}
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-password"
+                      type={showPassword ? "text" : "password"}
+                      {...formik.getFieldProps("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            onMouseUp={handleMouseUpPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                      <FormHelperText error>
+                        {formik.errors.password}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
                 </div>
 
-                {/* Gender Field */}
+                {/* Gender */}
                 <div>
                   <TextField
                     fullWidth
                     select
                     label="Gender"
                     variant="outlined"
+                    name="gender"
                     value={formik.values.gender}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    name="gender"
                   >
                     {genders.map((item) => (
                       <MenuItem
@@ -170,27 +175,23 @@ const RegisterPage = () => {
                     ))}
                   </TextField>
                   {formik.touched.gender && formik.errors.gender && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
+                    <Typography variant="body2" color="error" className="mt-1">
                       {formik.errors.gender}
                     </Typography>
                   )}
                 </div>
 
-                {/* Role Field */}
+                {/* Role */}
                 <div>
                   <TextField
                     fullWidth
                     select
                     label="Role"
                     variant="outlined"
+                    name="role"
                     value={formik.values.role}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    name="role"
                   >
                     {roles.map((item) => (
                       <MenuItem
@@ -203,41 +204,36 @@ const RegisterPage = () => {
                     ))}
                   </TextField>
                   {formik.touched.role && formik.errors.role && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
+                    <Typography variant="body2" color="error" className="mt-1">
                       {formik.errors.role}
                     </Typography>
                   )}
                 </div>
 
                 {/* Submit Button */}
-                {/* <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  className="py-3 text-lg bg-custom hover:bg-custom-700 b"
-                >
-                  Register
-                </Button> */}
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{
+                    py: 1.5,
                     backgroundColor: "#033069",
                     "&:hover": { backgroundColor: "#022050" },
                   }}
                 >
                   Register
                 </Button>
+                <div className="flex justify-center">
+                  <Link
+                    href="/login"
+                    className="text-md underline text-custom mt-4"
+                  >
+                    Already registered? Login
+                  </Link>
+                </div>
               </form>
             )}
           </Formik>
-
-          {/* Form */}
         </div>
       </div>
     </div>
