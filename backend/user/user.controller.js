@@ -61,6 +61,7 @@ router.post(
 //if does not exist throw error
 //check password
 //generate token
+
 router.post(
   "/login",
   //validate login credentials

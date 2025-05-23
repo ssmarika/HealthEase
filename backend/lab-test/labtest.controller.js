@@ -34,7 +34,7 @@ router.post(
 //find the particular object to be updated then update it
 router.put(
   "/update/:id",
-  isAdmin,
+  // isAdmin,
   validateMongoIdFromParams,
   validateReqBody(labTestValidationSchema),
   async (req, res) => {
@@ -55,23 +55,19 @@ router.put(
 );
 
 //? view lab tests by id
-router.get(
-  "/listbyid/:id",
-  validateMongoIdFromParams,
-  async (req, res) => {
-    //extract the from the request params
-    const testId = req.params.id;
+router.get("/listbyid/:id", validateMongoIdFromParams, async (req, res) => {
+  //extract the from the request params
+  const testId = req.params.id;
 
-    //find the lab test with the help of id
-    const labTest = await LabTest.findById(testId);
+  //find the lab test with the help of id
+  const labTest = await LabTest.findById(testId);
 
-    //if lab test not found throw error
-    if (!labTest) {
-      return res.status(401).send({ message: "Lab Test not available" });
-    }
-    return res.status(200).send({ message: "Test found", labTest });
+  //if lab test not found throw error
+  if (!labTest) {
+    return res.status(401).send({ message: "Lab Test not available" });
   }
-);
+  return res.status(200).send({ message: "Test found", labTest });
+});
 
 //?view lab tests all
 router.get("/list/all", async (req, res) => {

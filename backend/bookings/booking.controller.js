@@ -151,11 +151,61 @@ router.post("/statuslist", isAdmin, async (req, res) => {
   return res.status(200).send({ message: "StatusList", bookingList });
 });
 
-//? status from body
-router.get("/list/:status", async (req, res) => {
-  const { status } = req.params;
-  // console.log(status);
-  const bookingList = await Booking.find({ status });
-  return res.status(200).send({ message: "StatusList", bookingList });
-});
+//? status view for admin
+router.post(
+  "/adminlist/:status",
+  isAdmin,
+  validateReqBody(paginationData),
+
+  async (req, res) => {
+    const { status } = req.params;
+
+    const { page, limit, searchText } = req.body;
+
+    let match = { status };
+
+    if (searchText) {
+      match.name = { $regex: searchText, $options: "i" };
+    }
+
+    const skip = (page - 1) * limit;
+
+    const bookingList = await Booking.aggregate([
+      { $match: match },
+      { $skip: skip },
+      { $limit: limit },
+    ]);
+    return res.status(200).send({ Message: "Appointment List", bookingList });
+  }
+);
+
+//? status view to clients
+router.post(
+  "/clientlist/:status",
+  isClient,
+
+  validateReqBody(paginationData),
+  async (req, res) => {
+    const { status } = req.params;
+    const { page, limit, searchText } = req.body;
+    let match = {
+      clientId: req.loggedInUserId,
+      status: status,
+    };
+
+    if (searchText) {
+      match.name = { $regex: searchText, $options: "i" };
+    }
+
+    const skip = (page - 1) * limit;
+
+    const bookingList = await Booking.aggregate([
+      { $match: match },
+      { $skip: skip },
+      { $limit: limit },
+    ]);
+    return res.status(200).send({ Message: "Appointment List", bookingList });
+  }
+);
+
 export default router;
