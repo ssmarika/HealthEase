@@ -1,4 +1,6 @@
 import ResponsiveAppBar from "@/components/Appbar";
+import SnackbarMessage from "@/components/SnackbarMessage";
+import { Snackbar } from "@mui/material";
 
 export const metadata = {
   title: "HealthEase",
@@ -10,6 +12,7 @@ export default function AuthLayout({ children }) {
     <div className="h-screen w-full flex justify-center items-center">
       <ResponsiveAppBar />
       {children}
+      <SnackbarMessage />
     </div>
   );
 }

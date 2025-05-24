@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { localStorageCheck } from "@/utils/localstorage.check";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 
-const pages = ["Lab-Tests", "Appointments"];
+const pages = ["Lab-Test", "Appointment", "Report"];
 
 function ResponsiveAppBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -165,7 +165,7 @@ function ResponsiveAppBar() {
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page) => {
-                if (page === "Appointments") {
+                if (page === "Appointment") {
                   return (
                     <MenuItem key={page} onClick={handleOpenAppointmentsMenu}>
                       <Typography sx={{ textAlign: "center" }}>
@@ -174,7 +174,7 @@ function ResponsiveAppBar() {
                     </MenuItem>
                   );
                 }
-                if (page === "Lab-Tests") {
+                if (page === "Lab-Test") {
                   return (
                     <MenuItem
                       key={page}
@@ -186,11 +186,11 @@ function ResponsiveAppBar() {
                     </MenuItem>
                   );
                 }
-                if (page === "Blog") {
+                if (page === "Report") {
                   return (
                     <MenuItem
                       key={page}
-                      onClick={() => handleNavigateTo("/blog")}
+                      onClick={() => handleNavigateTo("/report")}
                     >
                       <Typography sx={{ textAlign: "center" }}>
                         {page}
@@ -233,7 +233,7 @@ function ResponsiveAppBar() {
           {/* Page Names */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => {
-              if (page === "Appointments") {
+              if (page === "Appointment") {
                 return (
                   <Button
                     key={page}
@@ -249,7 +249,7 @@ function ResponsiveAppBar() {
                   </Button>
                 );
               }
-              if (page === "Lab-Tests") {
+              if (page === "Lab-Test") {
                 return (
                   <Button
                     key={page}
@@ -265,11 +265,11 @@ function ResponsiveAppBar() {
                   </Button>
                 );
               }
-              if (page === "Blog") {
+              if (page === "Report") {
                 return (
                   <Button
                     key={page}
-                    onClick={() => handleNavigateTo("/blog")}
+                    onClick={() => handleNavigateTo("/report")}
                     sx={{
                       my: 2,
                       color: "white",

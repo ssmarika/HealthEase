@@ -16,9 +16,12 @@ import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
 import Loader from "./Loader";
+import { useDispatch } from "react-redux";
+import { openSuccessSnackbar } from "@/store/slice/snackbarSlice";
 
 const AddTest = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { isPending, error, mutate } = useMutation({
     mutationKey: ["add-test"],
     mutationFn: async (values) => {
@@ -29,7 +32,9 @@ const AddTest = () => {
       });
     },
     onSuccess: () => {
-      router.push("/");
+      dispatch(openSuccessSnackbar("Test added successfully"));
+
+      router.push("/labtest");
     },
   });
   if (isPending) {

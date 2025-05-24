@@ -24,6 +24,7 @@ export const serviceType = [
 
 export const bookingStatus = [
   { id: 1, status: "pending" },
-  { id: 2, status: "confirmed" },
+  { id: 2, status: "approved" },
   { id: 3, status: "cancelled" },
+  { id: 4, status: "completed" },
 ];

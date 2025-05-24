@@ -17,9 +17,13 @@ import { Formik } from "formik";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import Loader from "./Loader";
+import { useDispatch } from "react-redux";
+import { openSuccessSnackbar } from "@/store/slice/snackbarSlice";
 
 const BookingForm = () => {
   const params = useParams();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const { isPending, data } = useQuery({
     queryKey: ["test-info-id"],
@@ -36,6 +40,10 @@ const BookingForm = () => {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
       });
+    },
+    onSuccess: () => {
+      dispatch(openSuccessSnackbar("Appointment booked"));
+      router.push("/appointment/list");
     },
   });
 
