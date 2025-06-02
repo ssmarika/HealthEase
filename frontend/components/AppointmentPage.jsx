@@ -1,19 +1,10 @@
 "use client";
-import {
-  Box,
-  Button,
-  MenuItem,
-  Pagination,
-  Select,
-  Typography,
-} from "@mui/material";
+import { Pagination, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import $axios from "@/lib/axios/axios.instance";
 import { isAdmin, isClient } from "@/utils/role.check";
-
 import AppointmentTable from "./AppointmentTable";
-import FixedBottomNavigation from "./BottomNav";
 import Loader from "./Loader";
 
 const AppointmentPage = () => {
@@ -33,6 +24,7 @@ const AppointmentPage = () => {
       );
     },
     enabled: isClient(),
+    refetchOnMount: "always",
   });
 
   const { isLoading: adminPending, data: adminData } = useQuery({
@@ -49,6 +41,7 @@ const AppointmentPage = () => {
       );
     },
     enabled: isAdmin(),
+    refetchOnMount: "always",
   });
 
   const appointments = isAdmin()

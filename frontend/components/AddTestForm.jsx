@@ -11,7 +11,6 @@ import {
   LinearProgress,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -50,10 +49,8 @@ const AddTest = () => {
         initialValues={{
           name: "",
           description: "",
-          inPersonPrice: "",
-          homeServicePrice: "",
-          inPersonAvailable: false,
-          homeServiceAvailable: false,
+          price: "",
+          available: false,
         }}
         validationSchema={labTestValidationSchema}
         onSubmit={(values) => {
@@ -81,7 +78,6 @@ const AddTest = () => {
                   </Typography>
                 )}
               </div>
-
               {/* Description */}
               <div>
                 <TextField
@@ -102,70 +98,34 @@ const AddTest = () => {
                 )}
               </div>
 
-              {/* In-Person Service Price */}
               <div>
                 <TextField
                   fullWidth
-                  label="In-Person Price"
-                  {...formik.getFieldProps("inPersonPrice")}
+                  label="Price"
+                  {...formik.getFieldProps("price")}
                 />
-                {formik.touched.inPersonPrice &&
-                  formik.errors.inPersonPrice && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
-                      {formik.errors.inPersonPrice}
-                    </Typography>
-                  )}
+                {formik.touched.price && formik.errors.price && (
+                  <Typography
+                    color="error"
+                    variant="body2"
+                    className="mt-1 text-sm text-red-500"
+                  >
+                    {formik.errors.price}
+                  </Typography>
+                )}
               </div>
 
-              {/* Home Service Price */}
-              <div>
-                <TextField
-                  fullWidth
-                  label="Home Service Price"
-                  {...formik.getFieldProps("homeServicePrice")}
-                />
-                {formik.touched.homeServicePrice &&
-                  formik.errors.homeServicePrice && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
-                      {formik.errors.homeServicePrice}
-                    </Typography>
-                  )}
-              </div>
-
-              {/* Availability Checkbox */}
               <div>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      {...formik.getFieldProps("inPersonAvailable")}
-                      checked={formik.values.inPersonAvailable} // Bind the checkbox with formik state
+                      {...formik.getFieldProps("available")}
+                      checked={formik.values.available} // Bind the checkbox with formik state
                     />
                   }
-                  label="Clinic Visit Available"
+                  label="Service Available"
                 />
               </div>
-
-              {/* Availability Checkbox */}
-              <div>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      {...formik.getFieldProps("homeServiceAvailable")}
-                      checked={formik.values.homeServiceAvailable} // Bind the checkbox with formik state
-                    />
-                  }
-                  label="Home Service Available"
-                />
-              </div>
-
               <div className="flex justify-center">
                 <Button
                   variant="contained"

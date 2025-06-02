@@ -15,10 +15,13 @@ import { Formik } from "formik";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import Loader from "./Loader";
+import { useDispatch } from "react-redux";
+import { openSuccessSnackbar } from "@/store/slice/snackbarSlice";
 
 const EditTestForm = () => {
   const params = useParams();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { isLoading, data } = useQuery({
     queryKey: ["test-detail"],
@@ -34,6 +37,7 @@ const EditTestForm = () => {
       return await $axios.put(`/labtest/update/${params.id}`, values);
     },
     onSuccess: () => {
+      dispatch(openSuccessSnackbar("Test edited successfully"));
       return router.push("/labtest");
     },
   });
@@ -51,10 +55,10 @@ const EditTestForm = () => {
         initialValues={{
           name: test?.name || "",
           description: test?.description || "",
-          inPersonPrice: test?.inPersonPrice || "",
-          homeServicePrice: test?.homeServicePrice || "",
-          inPersonAvailable: test?.inPersonAvailable || false,
-          homeServiceAvailable: test?.homeServiceAvailable || false,
+          price: test?.price || "",
+          // homeServicePrice: test?.homeServicePrice || "",
+          available: test?.available || false,
+          // homeServiceAvailable: test?.homeServiceAvailable || false,
         }}
         enableReinitialize
         validationSchema={labTestValidationSchema}
@@ -103,26 +107,25 @@ const EditTestForm = () => {
                 )}
               </div>
 
-              {/* In-Person Service Price */}
+              {/*Price */}
               <div>
                 <TextField
                   fullWidth
-                  label="In-Person Price"
-                  {...formik.getFieldProps("inPersonPrice")}
+                  label="Price"
+                  {...formik.getFieldProps("price")}
                 />
-                {formik.touched.inPersonPrice &&
-                  formik.errors.inPersonPrice && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
-                      {formik.errors.inPersonPrice}
-                    </Typography>
-                  )}
+                {formik.touched.price && formik.errors.price && (
+                  <Typography
+                    color="error"
+                    variant="body2"
+                    className="mt-1 text-sm text-red-500"
+                  >
+                    {formik.errors.price}
+                  </Typography>
+                )}
               </div>
 
-              {/* Home Service Price */}
+              {/* Home Service Price
               <div>
                 <TextField
                   fullWidth
@@ -139,23 +142,23 @@ const EditTestForm = () => {
                       {formik.errors.homeServicePrice}
                     </Typography>
                   )}
-              </div>
+              </div> */}
 
               {/* Availability Checkbox */}
               <div>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      {...formik.getFieldProps("inPersonAvailable")}
-                      checked={formik.values.inPersonAvailable} // Bind the checkbox with formik state
+                      {...formik.getFieldProps("available")}
+                      checked={formik.values.available} // Bind the checkbox with formik state
                     />
                   }
-                  label="Clinic Visit Available"
+                  label="Service Available"
                 />
               </div>
 
               {/* Availability Checkbox */}
-              <div>
+              {/* <div>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -165,7 +168,7 @@ const EditTestForm = () => {
                   }
                   label="Home Service Available"
                 />
-              </div>
+              </div> */}
 
               <div className="flex justify-center">
                 <Button

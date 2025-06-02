@@ -71,7 +71,7 @@ const LabTestDetail = () => {
       </Typography>
 
       <Box className="w-full flex flex-col md:flex-row items-center justify-center gap-8 mb-4">
-        <Box className="flex flex-col items-center">
+        {/* <Box className="flex flex-col items-center">
           <LocalHospitalIcon
             sx={{
               color: test.inPersonAvailable ? "#033069" : "#bdbdbd",
@@ -98,12 +98,12 @@ const LabTestDetail = () => {
             sx={{ mt: 1 }}
             icon={test.inPersonAvailable ? undefined : undefined}
           />
-        </Box>
+        </Box> */}
 
         <Box className="flex flex-col items-center">
           <HomeIcon
             sx={{
-              color: test.homeServiceAvailable ? "#033069" : "#bdbdbd",
+              color: test.available ? "#033069" : "#bdbdbd",
               fontSize: 35,
               mb: 1,
             }}
@@ -111,18 +111,18 @@ const LabTestDetail = () => {
           <Typography
             variant="subtitle1"
             sx={{
-              color: test.homeServiceAvailable ? "#033069" : "#bdbdbd",
+              color: test.available ? "#033069" : "#bdbdbd",
               fontWeight: 600,
             }}
           >
             Home Service
           </Typography>
           <Typography variant="h6" sx={{ fontWeight: 500 }}>
-            Rs. {test.homeServicePrice}
+            Rs. {test.price}
           </Typography>
           <Chip
-            label={test.homeServiceAvailable ? "Available" : "Not Available"}
-            color={test.homeServiceAvailable ? "success" : "default"}
+            label={test.available ? "Available" : "Not Available"}
+            color={test.available ? "success" : "default"}
             size="small"
             sx={{ mt: 1 }}
           />

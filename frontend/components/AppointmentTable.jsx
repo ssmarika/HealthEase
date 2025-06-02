@@ -56,7 +56,6 @@ const AppointmentTable = ({ appointments = [] }) => {
               "Address",
               "Date",
               "Time",
-              "Service Type",
               "Status",
             ].map((header) => (
               <TableCell
@@ -74,7 +73,9 @@ const AppointmentTable = ({ appointments = [] }) => {
             appointments.map((row, index) => (
               <TableRow key={row._id || index}>
                 <TableCell align="center">{row.name}</TableCell>
-                <TableCell align="center">{row.testName}</TableCell>
+                <TableCell align="center">
+                  {row.tests.map((test) => test.testName)}
+                </TableCell>
                 <TableCell align="center">{row.address}</TableCell>
                 <TableCell align="center">
                   {new Date(row.date).toLocaleDateString()}
@@ -85,7 +86,6 @@ const AppointmentTable = ({ appointments = [] }) => {
                     minute: "2-digit",
                   })}
                 </TableCell>
-                <TableCell align="center">{row.serviceType}</TableCell>
 
                 <TableCell align="center">
                   {isAdmin() ? (

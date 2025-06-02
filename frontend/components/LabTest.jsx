@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import $axios from "@/lib/axios/axios.instance";
 import LabTestCard from "./LabTestCard";
 import Loader from "./Loader";
-import { isAdmin } from "@/utils/role.check";
+import { isAdmin, isClient } from "@/utils/role.check";
 import { useRouter } from "next/navigation";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
@@ -52,6 +52,24 @@ const LabTest = () => {
           Add Test
         </Button>
       )}
+
+      {isClient() && (
+        <Button
+          variant="contained"
+          startIcon={<AddRoundedIcon />}
+          onClick={() => {
+            router.push("/add");
+          }}
+          sx={{
+            alignContent: "center",
+            backgroundColor: "#033069",
+            "&:hover": { backgroundColor: "#022050" },
+          }}
+        >
+          Book Multiple Tests
+        </Button>
+      )}
+
       <Box className="flex justify-center space-x-8">
         {labTestList?.map((item) => {
           return <LabTestCard key={item._id} {...item} />;

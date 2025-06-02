@@ -23,13 +23,13 @@ const pages = ["Lab-Test", "Appointment", "Report"];
 function ResponsiveAppBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [userRole, setUserRole] = useState("");
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [anchorElAppointments, setAnchorElAppointments] = useState(null); // State for Appointments menu
+  const [anchorElAppointments, setAnchorElAppointments] = useState(null);
 
   const router = useRouter();
 
-  // Check login status and user name on mount and when localStorage changes
   useEffect(() => {
     const checkLogin = () => {
       const loggedIn = localStorageCheck();
@@ -37,12 +37,14 @@ function ResponsiveAppBar() {
       if (loggedIn) {
         const name = localStorage.getItem("firstName") || "User";
         setUserName(name);
+        const role = localStorage.getItem("userRole") || "";
+        setUserRole(role);
       } else {
         setUserName("");
+        setUserRole("");
       }
     };
 
-    // Listen for both "storage" (other tabs) and our custom event (this tab)
     window.addEventListener("storage", checkLogin);
     window.addEventListener("localStorageChanged", checkLogin);
 
@@ -345,6 +347,11 @@ function ResponsiveAppBar() {
                 <MenuItem>
                   <Typography sx={{ textAlign: "center" }}>
                     Hi, {userName}
+                  </Typography>
+                </MenuItem>
+                <MenuItem>
+                  <Typography sx={{ textAlign: "center" }}>
+                    {userRole}
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>

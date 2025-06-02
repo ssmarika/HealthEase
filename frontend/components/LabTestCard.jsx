@@ -27,13 +27,12 @@ const LabTestCard = (props) => {
       {/* Prices and Availability */}
       <Box className="w-full mt-4 flex flex-col items-center space-y-2">
         <Typography variant="h6" className="text-blue-900">
-          Clinic Visit: Rs.{props.inPersonPrice}{" "}
-          {props.inPersonAvailable ? "✔️" : "❌"}
+          Price: Rs.{props.price} {props.available ? "✔️" : "❌"}
         </Typography>
-        <Typography variant="h6" className="text-blue-900">
+        {/* <Typography variant="h6" className="text-blue-900">
           Home Service: Rs.{props.homeServicePrice}{" "}
           {props.homeServiceAvailable ? "✔️" : "❌"}
-        </Typography>
+        </Typography> */}
       </Box>
 
       {/* Buttons Section */}

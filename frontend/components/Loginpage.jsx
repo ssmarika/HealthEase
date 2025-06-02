@@ -26,7 +26,6 @@ import { openSuccessSnackbar } from "@/store/slice/snackbarSlice";
 
 const LoginPage = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -40,8 +39,6 @@ const LoginPage = () => {
       return await $axios.post("/user/login", values);
     },
     onSuccess: (response) => {
-      dispatch(openSuccessSnackbar("Logged in successfully"));
-
       window.localStorage.setItem("token", response?.data?.accessToken);
       window.localStorage.setItem("firstName", response?.data?.user?.firstName);
       window.localStorage.setItem("userRole", response?.data?.user?.role);

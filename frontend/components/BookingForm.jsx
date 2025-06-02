@@ -69,7 +69,7 @@ const BookingForm = () => {
         initialValues={{
           name: "",
           address: "",
-          serviceType: "",
+          // serviceType: "",
           // note: "",
           date: "",
           time: "",
@@ -117,43 +117,6 @@ const BookingForm = () => {
                 )}
               </div>
 
-              <div>
-                <TextField
-                  fullWidth
-                  select
-                  label="Service Type"
-                  variant="outlined"
-                  value={formik.values.serviceType}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  name="serviceType"
-                >
-                  {serviceType.map((item) => (
-                    <MenuItem
-                      key={item.id}
-                      value={item.serviceType}
-                      sx={{ textTransform: "capitalize" }}
-                      disabled={
-                        (item.serviceType === "clinic visit" &&
-                          !test?.inPersonAvailable) ||
-                        (item.serviceType === "home service" &&
-                          !test?.homeServiceAvailable)
-                      } // Disable unavailable service
-                    >
-                      {item.serviceType}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                {formik.touched.serviceType && formik.errors.serviceType && (
-                  <Typography
-                    color="error"
-                    variant="body2"
-                    className="mt-1 text-sm text-red-500"
-                  >
-                    {formik.errors.serviceType}
-                  </Typography>
-                )}
-              </div>
               <div>
                 <TextField
                   fullWidth
