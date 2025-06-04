@@ -187,16 +187,37 @@ import Checkbox from "@mui/material/Checkbox";
 import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { labTest } from "@/constants/general.constant";
+
 import { multipleBookingValidationSchema } from "@/validation-schema/multiple.booking.validation";
 
 const MultipleBookingForm = () => {
-  const params = useParams();
   const dispatch = useDispatch();
   const router = useRouter();
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
+  const { isLoading, data } = useQuery({
+    queryKey: ["name-list"],
+    queryFn: () => {
+      return $axios.get("/labtest/list/name");
+    },
+  });
+  const labTest = data?.data?.nameList;
+  const { isPending, error, mutate } = useMutation({
+    mutationKey: ["multiple-booking"],
+    mutationFn: async (values) => {
+      return await $axios.post("/booking/multiple", values, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
+    },
+    onSuccess: () => {
+      dispatch(openSuccessSnackbar("Test added successfully"));
+
+      router.push("/labtest");
+    },
+  });
   return (
     <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg mx-auto mt-32">
       <Typography variant="h4" className="text-center font-bold">
@@ -214,7 +235,7 @@ const MultipleBookingForm = () => {
         validationSchema={multipleBookingValidationSchema}
         onSubmit={(values) => {
           console.log(values);
-          // mutate(values);
+          mutate(values);
         }}
       >
         {(formik) => {
@@ -265,7 +286,7 @@ const MultipleBookingForm = () => {
                 value={formik.values.tests}
                 onChange={(_, value) => formik.setFieldValue("tests", value)}
                 onBlur={formik.handleBlur}
-                getOptionLabel={(option) => option.testName}
+                getOptionLabel={(option) => option.name}
                 renderOption={(props, option, { selected }) => {
                   const { key, ...optionProps } = props;
                   return (
@@ -276,7 +297,7 @@ const MultipleBookingForm = () => {
                         style={{ marginRight: 8 }}
                         checked={selected}
                       />
-                      {option.testName}
+                      {option.name}
                     </li>
                   );
                 }}

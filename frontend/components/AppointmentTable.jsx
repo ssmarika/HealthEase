@@ -14,9 +14,6 @@ import $axios from "@/lib/axios/axios.instance";
 import Loader from "./Loader";
 
 const AppointmentTable = ({ appointments = [] }) => {
-  //   const { appointments } = props;
-  console.log(appointments);
-
   const queryClient = useQueryClient();
 
   const { isLoading, mutate } = useMutation({
@@ -73,8 +70,15 @@ const AppointmentTable = ({ appointments = [] }) => {
             appointments.map((row, index) => (
               <TableRow key={row._id || index}>
                 <TableCell align="center">{row.name}</TableCell>
+                {/* <TableCell align="center">
+                  {row.tests.map((test) => test.name)}
+                </TableCell> */}
                 <TableCell align="center">
-                  {row.tests.map((test) => test.testName)}
+                  {row.tests.map((test, idx) => (
+                    <div key={test.testId || idx}>
+                      {idx + 1}. {test.name}
+                    </div>
+                  ))}
                 </TableCell>
                 <TableCell align="center">{row.address}</TableCell>
                 <TableCell align="center">

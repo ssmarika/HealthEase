@@ -58,7 +58,7 @@ const LabTest = () => {
           variant="contained"
           startIcon={<AddRoundedIcon />}
           onClick={() => {
-            router.push("/add");
+            router.push("/multiplebooking");
           }}
           sx={{
             alignContent: "center",

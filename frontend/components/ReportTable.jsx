@@ -9,10 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 import { isAdmin } from "@/utils/role.check";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 const ReportTable = ({ appointments = [] }) => {
   //   const { appointments } = props;
   console.log(appointments);
+  const router = useRouter();
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2rem" }}>
@@ -37,7 +40,13 @@ const ReportTable = ({ appointments = [] }) => {
             appointments.map((row, index) => (
               <TableRow key={row._id || index}>
                 <TableCell align="center">{row.name}</TableCell>
-                <TableCell align="center">{row.testName}</TableCell>
+                <TableCell align="center">
+                  {row.tests.map((test, idx) => (
+                    <div key={test.testId || idx}>
+                      {idx + 1}. {test.name}
+                    </div>
+                  ))}
+                </TableCell>
                 <TableCell align="center">
                   {new Date(row.date).toLocaleDateString()}
                 </TableCell>
@@ -45,9 +54,21 @@ const ReportTable = ({ appointments = [] }) => {
                 <TableCell align="center">{row.status}</TableCell>
                 <TableCell align="center">
                   {isAdmin() ? (
-                    <Button>Upload document</Button>
+                    <Button
+                      onClick={() => {
+                        router.push(`/upload/${row._id}`);
+                      }}
+                    >
+                      Upload document
+                    </Button>
                   ) : (
-                    <Button>View Document</Button>
+                    <Button
+                      onClick={() => {
+                        router.push(`/view/${row._id}`);
+                      }}
+                    >
+                      View Document
+                    </Button>
                   )}
                 </TableCell>
               </TableRow>
