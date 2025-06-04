@@ -3,6 +3,7 @@ import connectDB from "./database-connection/db.connect.js";
 import UserRoutes from "./user/user.controller.js";
 import LabTestRoutes from "./lab-test/labtest.controller.js";
 import BookingRoutes from "./bookings/booking.controller.js";
+import ReportRoutes from "./report/report.controller.js";
 import cors from "cors";
 import { swaggerUi, swaggerDocument } from "./swagger.js";
 
@@ -18,6 +19,10 @@ app.use(
 //to make app understand json
 app.use(express.json());
 
+//serve static files from 'files' directory
+// to make the files accessible via the /files route so that we can view them in the browser in the client side
+app.use("/files", express.static("files"));
+
 //database connection
 await connectDB();
 
@@ -25,6 +30,7 @@ await connectDB();
 app.use("/user", UserRoutes);
 app.use("/labtest", LabTestRoutes);
 app.use("/booking", BookingRoutes);
+app.use("/report", ReportRoutes);
 
 //network and server
 const PORT = process.env.DB_PORT || 8080;

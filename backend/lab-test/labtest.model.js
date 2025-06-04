@@ -13,22 +13,22 @@ const labTestSchema = new mongoose.Schema({
     maxlength: 1000,
     required: true,
   },
-  inPersonPrice: {
+  // inPersonPrice: {
+  //   type: Number,
+  //   required: true,
+  //   min: 0,
+  // },
+  price: {
     type: Number,
     required: true,
     min: 0,
   },
-  homeServicePrice: {
-    type: Number,
-    required: true,
-    min: 0,
-  },
-  inPersonAvailable: {
-    type: Boolean, // Use Mongoose's Boolean type
-    required: true,
-    default: true,
-  },
-  homeServiceAvailable: {
+  // inPersonAvailable: {
+  //   type: Boolean, // Use Mongoose's Boolean type
+  //   required: true,
+  //   default: true,
+  // },
+  available: {
     type: Boolean, // Use Mongoose's Boolean type
     required: true,
     default: true,

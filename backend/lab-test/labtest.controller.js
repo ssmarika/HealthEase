@@ -75,6 +75,16 @@ router.get("/list/all", async (req, res) => {
   return res.status(200).send({ message: "List", testList });
 });
 
+//list labtest names
+router.get("/list/name", async (req, res) => {
+  const nameList = await LabTest.aggregate([
+    { $match: {} },
+    { $project: { name: 1 } },
+  ]);
+
+  return res.status(200).send({ message: "Name List", nameList });
+});
+
 //? list labtest
 router.post(
   "/list",
@@ -98,10 +108,10 @@ router.post(
       {
         $project: {
           name: 1,
-          inPersonPrice: 1,
-          homeServicePrice: 1,
-          inPersonAvailable: 1,
-          homeServiceAvailable: 1,
+          price: 1,
+          // homeServicePrice: 1,
+          // inPersonAvailable: 1,
+          available: 1,
         },
       },
     ]);

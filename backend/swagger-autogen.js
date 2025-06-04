@@ -15,7 +15,7 @@ const endpointsFiles = [
   "./user/user.controller.js",
   "./lab-test/labtest.controller.js",
   "./bookings/booking.controller.js",
-  // Removed './reports/reports.controller.js' because it is empty
+  "./report/report.controller.js",
 ];
 
 swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);
