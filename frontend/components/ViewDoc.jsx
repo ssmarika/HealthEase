@@ -2,34 +2,34 @@
 import $axios from "@/lib/axios/axios.instance";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import React from "react";
+import { useEffect } from "react";
 
 const ViewDoc = () => {
   const params = useParams();
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ["view-report"],
+    queryKey: ["view-report", params.id],
     queryFn: async () => {
-      return await $axios.get(`/report/view/${params.id}`);
+      const response = await $axios.get(`/report/view/${params.id}`);
+      return response.data;
     },
   });
-  const doc = data?.data?.report;
-  console.log(doc);
 
-  const showDoc = () => {
-    window.open(
-      `http://localhost:8080/files/${doc.pdf}`,
-      "_blank",
-      "noreferrer"
-    );
-  };
+  const doc = data?.report;
 
-  return (
-    <div>
-      Doc is shown in another window
-      {showDoc()}
-    </div>
-  );
+  useEffect(() => {
+    if (doc?.pdf) {
+      window.open(
+        `http://localhost:8080/files/${doc.pdf}`,
+        "_blank",
+        "noreferrer"
+      );
+    }
+  }, [doc]);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return <div>The document will open in a new window.</div>;
 };
 
 export default ViewDoc;

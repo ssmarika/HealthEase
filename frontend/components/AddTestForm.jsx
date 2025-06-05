@@ -97,7 +97,7 @@ const AddTest = () => {
                   </Typography>
                 )}
               </div>
-
+               {/* Price */}
               <div>
                 <TextField
                   fullWidth
@@ -114,13 +114,13 @@ const AddTest = () => {
                   </Typography>
                 )}
               </div>
-
+              {/* Available */}
               <div>
                 <FormControlLabel
                   control={
                     <Checkbox
                       {...formik.getFieldProps("available")}
-                      checked={formik.values.available} // Bind the checkbox with formik state
+                      checked={formik.values.available} 
                     />
                   }
                   label="Service Available"

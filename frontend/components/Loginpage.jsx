@@ -26,6 +26,7 @@ import { openSuccessSnackbar } from "@/store/slice/snackbarSlice";
 
 const LoginPage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -34,7 +35,7 @@ const LoginPage = () => {
   const handleMouseUpPassword = (event) => event.preventDefault();
 
   const { isPending, error, mutate } = useMutation({
-    mutationFn: ["login-user"],
+    mutationKey: ["login-user"],
     mutationFn: async (values) => {
       return await $axios.post("/user/login", values);
     },
@@ -42,7 +43,15 @@ const LoginPage = () => {
       window.localStorage.setItem("token", response?.data?.accessToken);
       window.localStorage.setItem("firstName", response?.data?.user?.firstName);
       window.localStorage.setItem("userRole", response?.data?.user?.role);
+      dispatch(openSuccessSnackbar("Login successful!"));
       router.push("/");
+    },
+    onError: (err) => {
+      let msg = "Login failed. Please try again.";
+      if (err?.response?.data?.message) {
+        msg = err.response.data.message;
+      }
+      dispatch(openSuccessSnackbar(msg));
     },
   });
   if (isPending) {

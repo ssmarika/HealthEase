@@ -202,7 +202,9 @@ const MultipleBookingForm = () => {
       return $axios.get("/labtest/list/name");
     },
   });
+
   const labTest = data?.data?.nameList;
+
   const { isPending, error, mutate } = useMutation({
     mutationKey: ["multiple-booking"],
     mutationFn: async (values) => {
@@ -213,8 +215,8 @@ const MultipleBookingForm = () => {
       });
     },
     onSuccess: () => {
-      dispatch(openSuccessSnackbar("Test added successfully"));
-
+      //!when i use dispatch the router.push is not functioning
+      // dispatch(openSuccessSnackbar("Test added successfully"));
       router.push("/labtest");
     },
   });

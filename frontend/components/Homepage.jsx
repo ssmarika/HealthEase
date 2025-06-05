@@ -126,9 +126,6 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-
-      {/* contact section*/}
-      <scetion></scetion>
     </div>
   );
 };

@@ -54,15 +54,43 @@ const ReportTable = ({ appointments = [] }) => {
                 <TableCell align="center">{row.status}</TableCell>
                 <TableCell align="center">
                   {isAdmin() ? (
-                    <Button
-                      onClick={() => {
-                        router.push(`/upload/${row._id}`);
-                      }}
-                    >
-                      Upload document
-                    </Button>
+                    <div className="flex flex-col gap-2">
+                      {" "}
+                      <Button
+                        onClick={() => {
+                          router.push(`/upload/${row._id}`);
+                        }}
+                        sx={{
+                          alignContent: "center",
+                          backgroundColor: "#033069",
+                          color: "white",
+                          "&:hover": { backgroundColor: "#022050" },
+                        }}
+                      >
+                        Upload document
+                      </Button>
+                      <Button
+                        sx={{
+                          alignContent: "center",
+                          backgroundColor: "#033069",
+                          color: "white",
+                          "&:hover": { backgroundColor: "#022050" },
+                        }}
+                        onClick={() => {
+                          router.push(`/view/${row._id}`);
+                        }}
+                      >
+                        View Document
+                      </Button>
+                    </div>
                   ) : (
                     <Button
+                      sx={{
+                        alignContent: "center",
+                        backgroundColor: "#033069",
+                        color: "white",
+                        "&:hover": { backgroundColor: "#022050" },
+                      }}
                       onClick={() => {
                         router.push(`/view/${row._id}`);
                       }}

@@ -71,34 +71,7 @@ const LabTestDetail = () => {
       </Typography>
 
       <Box className="w-full flex flex-col md:flex-row items-center justify-center gap-8 mb-4">
-        {/* <Box className="flex flex-col items-center">
-          <LocalHospitalIcon
-            sx={{
-              color: test.inPersonAvailable ? "#033069" : "#bdbdbd",
-              fontSize: 35,
-              mb: 1,
-            }}
-          />
-          <Typography
-            variant="subtitle1"
-            sx={{
-              color: test.inPersonAvailable ? "#033069" : "#bdbdbd",
-              fontWeight: 600,
-            }}
-          >
-            Clinic Visit
-          </Typography>
-          <Typography variant="h6" sx={{ fontWeight: 500 }}>
-            Rs. {test.inPersonPrice}
-          </Typography>
-          <Chip
-            label={test.inPersonAvailable ? "Available" : "Not Available"}
-            color={test.inPersonAvailable ? "success" : "default"}
-            size="small"
-            sx={{ mt: 1 }}
-            icon={test.inPersonAvailable ? undefined : undefined}
-          />
-        </Box> */}
+        
 
         <Box className="flex flex-col items-center">
           <HomeIcon

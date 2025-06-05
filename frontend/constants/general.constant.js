@@ -22,11 +22,6 @@ export const serviceType = [
   { id: 2, serviceType: "home service" },
 ];
 
-export const labTest = [
-  { id: 1, testName: "CBC" },
-  { id: 2, testName: "Cholestrol" },
-  { id: 3, testName: "Diabetes" },
-];
 
 export const bookingStatus = [
   { id: 1, status: "pending" },

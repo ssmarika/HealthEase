@@ -69,8 +69,6 @@ const BookingForm = () => {
         initialValues={{
           name: "",
           address: "",
-          // serviceType: "",
-          // note: "",
           date: "",
           time: "",
         }}
