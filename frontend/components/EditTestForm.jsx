@@ -125,25 +125,6 @@ const EditTestForm = () => {
                 )}
               </div>
 
-              {/* Home Service Price
-              <div>
-                <TextField
-                  fullWidth
-                  label="Home Service Price"
-                  {...formik.getFieldProps("homeServicePrice")}
-                />
-                {formik.touched.homeServicePrice &&
-                  formik.errors.homeServicePrice && (
-                    <Typography
-                      color="error"
-                      variant="body2"
-                      className="mt-1 text-sm text-red-500"
-                    >
-                      {formik.errors.homeServicePrice}
-                    </Typography>
-                  )}
-              </div> */}
-
               {/* Availability Checkbox */}
               <div>
                 <FormControlLabel
@@ -156,19 +137,6 @@ const EditTestForm = () => {
                   label="Service Available"
                 />
               </div>
-
-              {/* Availability Checkbox */}
-              {/* <div>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      {...formik.getFieldProps("homeServiceAvailable")}
-                      checked={formik.values.homeServiceAvailable} // Bind the checkbox with formik state
-                    />
-                  }
-                  label="Home Service Available"
-                />
-              </div> */}
 
               <div className="flex justify-center">
                 <Button

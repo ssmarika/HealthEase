@@ -6,11 +6,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { images } from "@/constants/general.constant";
-import {
-  Science as LabTestIcon,
-  Article as BlogIcon,
-  Chat as TestimonyIcon,
-} from "@mui/icons-material";
+import { Article as BlogIcon } from "@mui/icons-material";
 import BiotechIcon from "@mui/icons-material/Biotech";
 import MonitorHeartRoundedIcon from "@mui/icons-material/MonitorHeartRounded";
 import AddShoppingCartRoundedIcon from "@mui/icons-material/AddShoppingCartRounded";

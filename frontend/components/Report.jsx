@@ -1,9 +1,7 @@
 "use client";
 import $axios from "@/lib/axios/axios.instance";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
 import React, { useState } from "react";
-import AppointmentTable from "./AppointmentTable";
 import { Pagination, Typography } from "@mui/material";
 import { isAdmin, isClient } from "@/utils/role.check";
 import Loader from "./Loader";
