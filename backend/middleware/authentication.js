@@ -90,7 +90,6 @@ export const isAdmin = async (req, res, next) => {
   try {
     // extract token from req.headers
     const authorization = req.headers.authorization;
-    console.log(authorization);
 
     const splittedArray = authorization?.split(" ");
 
