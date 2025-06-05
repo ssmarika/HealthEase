@@ -3,7 +3,6 @@ import { isAdmin, isClient } from "../middleware/authentication.js";
 import validateReqBody from "../middleware/validate.req.body.js";
 import { bookingValidationSchema } from "./booking.validation.js";
 import Booking from "./booking.model.js";
-
 import validateMongoIdFromParams from "../middleware/validate.mongoid.js";
 import { paginationData } from "../lab-test/labtest.validation.js";
 import LabTest from "../lab-test/labtest.model.js";
@@ -47,39 +46,18 @@ router.post(
 );
 
 //make multiple bookings
-// router.post(
-//   "/multiple",
-//   isClient,
-//   (req, res, next) => {
-//     const clientId = req.loggedInUserId;
-//     const Tests = [];
-
-//     const { tests } = req.body;
-
-//     const newTests = tests.forEach(async (item) => {
-//       const test = await LabTest.find({ name: item.testName });
-//       let testObj = { testId: test[0]._id, testName: item.testName };
-//       Tests.push(testObj);
-//     });
-//     console.log(Tests);
-
-//     next();
-//   },
-//   (req, res) => {
-//     return res.status(200).send({ message: "adding" });
-//   }
-// );
 router.post("/multiple", isClient, async (req, res) => {
   const clientId = req.loggedInUserId;
 
-  const { tests, name, address, date, time } = req.body; // tests = array of {testName}
+  const { tests, name, address, date, time } = req.body;
 
   // Find all test IDs in parallel and build your array
+  // map does not return a promise, so we use Promise.all to wait for all promises to resolve
+  // !cannot use map directly with async/await so promise.all is used
   const Tests = await Promise.all(
     tests.map(async (item) => {
-      const test = await LabTest.findOne({ name: item.name }); // findOne is better, you expect one match
+      const test = await LabTest.findOne({ name: item.name });
       if (!test) {
-        // handle error or skip if test not found
         throw new Error(`Lab test not found: ${item.name}`);
       }
       return { testId: test._id, name: item.name };

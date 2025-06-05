@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema({
-  // testId: { type: mongoose.ObjectId, ref: "LabTest", required: true },
   clientId: { type: mongoose.ObjectId, ref: "User", required: true },
   name: { type: String, required: true, trim: true, maxlength: 30 },
   address: { type: String, required: true, trim: true, maxlength: 200 },

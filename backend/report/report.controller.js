@@ -5,10 +5,21 @@ import Report from "./report.model.js";
 
 const router = express.Router();
 
+//multer setup for file upload
+//create a directory for file uploads if it doesn't exist
+// this directory will be used to store the uploaded files
+// the files will be stored in the 'files' directory
+// so that they can be accessed via the /files route in the client side
+// this is done so that we can view the uploaded files in the browser
+// if the directory does not exist, it will be created
+// multer is used to handle file uploads in express
+
 const uploadDir = "./files";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
+// multer storage configuration
+// it specifies the destination directory for uploaded files and how to name the files
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
