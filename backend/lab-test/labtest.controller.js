@@ -109,8 +109,6 @@ router.post(
         $project: {
           name: 1,
           price: 1,
-          // homeServicePrice: 1,
-          // inPersonAvailable: 1,
           available: 1,
         },
       },

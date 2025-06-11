@@ -24,10 +24,8 @@ router.post(
     const { name, address, date, time } = req.body;
 
     const test = await LabTest.findById(testId);
-
     const testName = test.name;
-
-    const tests = { testId, testName };
+    const tests = [{ testId, name: testName }]; // Ensure tests is an array with a name property
 
     const status = "pending";
 
