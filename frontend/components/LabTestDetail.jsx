@@ -4,9 +4,7 @@ import {
   Box,
   Typography,
   Chip,
-  Stack,
   Button,
-  Paper,
   CircularProgress,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
